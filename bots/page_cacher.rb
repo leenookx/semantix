@@ -5,7 +5,8 @@ require 'simplehttp'
 
 data = SimpleHttp.get "http://slashdot.org"
 
-afile = File.new('local_cache/cache.tmp', "w+")
+filename = "local_cache/"+`uuidgen`.strip+".tmp"
+afile = File.new(filename, "w+")
 
 afile.puts data
 
