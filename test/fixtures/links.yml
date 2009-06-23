@@ -2,8 +2,8 @@
 
 one:
   url: MyString
-  processed: false
+  processed: 1
 
 two:
   url: MyString
-  processed: false
+  processed: 1

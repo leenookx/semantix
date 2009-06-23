@@ -9,11 +9,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090623073505) do
+ActiveRecord::Schema.define(:version => 20090623102440) do
 
   create_table "links", :force => true do |t|
     t.string   "url"
-    t.boolean  "processed"
+    t.integer  "processed"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

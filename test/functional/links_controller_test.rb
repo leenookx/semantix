@@ -12,15 +12,15 @@ class LinksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_should_create_links
-    assert_difference('Links.count') do
-      post :create, :links => { }
+  def test_should_create_link
+    assert_difference('Link.count') do
+      post :create, :link => { }
     end
 
-    assert_redirected_to links_path(assigns(:links))
+    assert_redirected_to link_path(assigns(:link))
   end
 
-  def test_should_show_links
+  def test_should_show_link
     get :show, :id => links(:one).id
     assert_response :success
   end
@@ -30,13 +30,13 @@ class LinksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  def test_should_update_links
-    put :update, :id => links(:one).id, :links => { }
-    assert_redirected_to links_path(assigns(:links))
+  def test_should_update_link
+    put :update, :id => links(:one).id, :link => { }
+    assert_redirected_to link_path(assigns(:link))
   end
 
-  def test_should_destroy_links
-    assert_difference('Links.count', -1) do
+  def test_should_destroy_link
+    assert_difference('Link.count', -1) do
       delete :destroy, :id => links(:one).id
     end
 

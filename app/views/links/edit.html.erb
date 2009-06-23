@@ -1,6 +1,6 @@
-<h1>Editing links</h1>
+<h1>Editing link</h1>
 
-<% form_for(@links) do |f| %>
+<% form_for(@link) do |f| %>
   <%= f.error_messages %>
 
   <p>
@@ -9,12 +9,12 @@
   </p>
   <p>
     <%= f.label :processed %><br />
-    <%= f.check_box :processed %>
+    <%= f.text_field :processed %>
   </p>
   <p>
     <%= f.submit "Update" %>
   </p>
 <% end %>
 
-<%= link_to 'Show', @links %> |
+<%= link_to 'Show', @link %> |
 <%= link_to 'Back', links_path %>
