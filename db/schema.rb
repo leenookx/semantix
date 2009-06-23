@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090623110541) do
+ActiveRecord::Schema.define(:version => 20090623115057) do
 
   create_table "keywords", :force => true do |t|
     t.string   "keyword"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20090623110541) do
     t.integer  "processed"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "cache_file"
   end
 
 end
