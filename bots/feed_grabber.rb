@@ -33,4 +33,8 @@ rescue
 end
 
 Feed.update(feed_id, {:description => rss.channel.description, :cache_file => cache_file, :published => Time.now})
+
+# Write the feed out to disk
+file = File.new(cache_file, "w+")
+file << content
  
