@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090816162103) do
+ActiveRecord::Schema.define(:version => 20090816165421) do
 
   create_table "feeds", :force => true do |t|
     t.string   "url"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20090816162103) do
     t.string   "description"
     t.string   "cache_file"
     t.datetime "published"
+    t.string   "icon_file"
   end
 
   create_table "keywords", :force => true do |t|
