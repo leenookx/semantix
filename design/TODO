@@ -6,3 +6,6 @@
 
 * Create a more immaginative GUI for the stories...
 
+* Automate the feed intake, and ensure that duplicate items from the
+  feeds are not added into the database.
+
