@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :feeds
-
   map.resources :links
+  map.resources :stories
 
   map.root :controller => "home"
   map.connect ':controller/:action/:id'

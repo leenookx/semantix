@@ -5,3 +5,15 @@ Hang onto your seats 'cos it's going to be a bumpy ride! ;)
 
 Feel free to send me any suggestions!
 
+
+Requirements
+------------
+
+This is a ruby-on-rails based application, so you need that!
+
+Also:
+    simple-rss
+    rubyrss
+    ferret
+    acts_as_ferret
+

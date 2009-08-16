@@ -1,0 +1,19 @@
+<h1>Listing stories</h1>
+
+<table>
+  <tr>
+    <th>Url</th>
+    <th>Detail</th>
+  </tr>
+
+<% for story in @stories %>
+  <tr>
+    <td><%=h story.url %></td>
+    <td><%=h story.details %></td>
+    <td><%= link_to 'Show', story %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
