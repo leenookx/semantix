@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090816165421) do
+ActiveRecord::Schema.define(:version => 20090816195648) do
 
   create_table "feeds", :force => true do |t|
     t.string   "url"
@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(:version => 20090816165421) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cache_file"
+  end
+
+  create_table "stories", :force => true do |t|
+    t.integer  "feed_id"
+    t.string   "url"
+    t.string   "title"
+    t.datetime "released"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "details",    :limit => 4096
   end
 
 end
