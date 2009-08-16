@@ -5,6 +5,10 @@ require 'rss'
 require 'open-uri'
 require 'active_record'
 
+require File.dirname(__FILE__) + '/../config/boot'
+ENV["RAILS_ENV"]='development'
+require RAILS_ROOT + '/config/environment'
+
 feed_id = 1
 
 ActiveRecord::Base.logger = Logger.new(STDERR)
@@ -14,6 +18,8 @@ ActiveRecord::Base.establish_connection(
     :adapter => "sqlite3",
     :dbfile => "db/development.sqlite3"
 )
+
+ActsAsFerret::Remote::Config::RAILS_ROOT = `pwd`
 
 require 'app/models/feed.rb'
 require 'app/models/story.rb'
