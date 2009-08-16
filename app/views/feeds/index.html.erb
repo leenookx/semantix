@@ -3,13 +3,17 @@
 <table>
   <tr>
     <th>Url</th>
+    <th>Description</th>
     <th>Interval</th>
+    <th>Last Updated</th>
   </tr>
 
 <% @feeds.each do |feed| %>
   <tr>
     <td><%=h feed.url %></td>
+    <td><%=h feed.description %></td>
     <td><%=h feed.interval %></td>
+    <td><%=h feed.published %></td>
     <td><%= link_to 'Show', feed %></td>
     <td><%= link_to 'Edit', edit_feed_path(feed) %></td>
     <td><%= link_to 'Destroy', feed, :confirm => 'Are you sure?', :method => :delete %></td>
