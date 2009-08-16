@@ -1,6 +1,6 @@
 <ul>
     <% for story in @stories %>
-    <li><%= link_to h(story.description), :controller => "stories", :action => "show", :id => story %></li>
+    <li><%= link_to h(story.details), :controller => "stories", :action => "show", :id => story %></li>
     <% end %>
 </ul>
 

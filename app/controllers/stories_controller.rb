@@ -4,7 +4,7 @@ require "acts_as_ferret"
 class StoriesController < ApplicationController
   def auto_complete_for_search_query
     @stories = Story.find_with_ferret(params["search"]["query"]+"*", {:limit => 5})
-    render :partial => "search results"
+    render :partial => "search_results"
   end
 
   layout 'stories', :except => [:auto_complete_for_search_query]

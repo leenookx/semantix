@@ -45,6 +45,10 @@ begin
             puts "#{story.title}"
             feed_record.stories.create(:feed_id => feed_id, :url => story.link, :details => story.description)
         end
+
+        # There seems to be a bug in ferret that means that this
+        # is not done automatically...
+        Story.rebuild_index
     end
 
 rescue => err

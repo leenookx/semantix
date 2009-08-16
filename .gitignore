@@ -1,2 +1,4 @@
-./log/*
-./tmp/*
+log/*
+tmp/*
+index/*
+local_cache/*
