@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090623115057) do
+ActiveRecord::Schema.define(:version => 20090816153617) do
 
   create_table "keywords", :force => true do |t|
     t.string   "keyword"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20090623115057) do
     t.integer  "count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "link_id"
   end
 
   create_table "links", :force => true do |t|
