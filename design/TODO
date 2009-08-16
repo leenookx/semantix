@@ -1,0 +1,8 @@
+* Actually get searching to work. Works from the console but not from
+  within the rails environment
+
+* People seems to recommend using "Thinking Sphinx" instead of ferret
+  so look at this later on (http://www.sphinxsearch.com).
+
+* Create a more immaginative GUI for the stories...
+

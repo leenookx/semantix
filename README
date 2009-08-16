@@ -15,5 +15,5 @@ Also:
     simple-rss
     rubyrss
     ferret
-    acts_as_ferret
+    acts_as_ferret (although this is installed as a plugin)
 
