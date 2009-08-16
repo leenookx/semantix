@@ -1,0 +1,13 @@
+<p>
+  <b>Url:</b>
+  <%=h @feed.url %>
+</p>
+
+<p>
+  <b>Interval:</b>
+  <%=h @feed.interval %>
+</p>
+
+
+<%= link_to 'Edit', edit_feed_path(@feed) %> |
+<%= link_to 'Back', feeds_path %>
