@@ -4,12 +4,14 @@
   <tr>
     <th>Url</th>
     <th>Processed</th>
+    <th>Cache File</th>
   </tr>
 
 <% for link in @links %>
   <tr>
     <td><%=h link.url %></td>
     <td><%=h link.processed %></td>
+    <td><%=h link.cache_file %></td>
     <td><%= link_to 'Show', link %></td>
     <td><%= link_to 'Edit', edit_link_path(link) %></td>
     <td><%= link_to 'Destroy', link, :confirm => 'Are you sure?', :method => :delete %></td>
