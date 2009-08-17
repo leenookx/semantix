@@ -1,8 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :blogs
   map.resources :semanticblogs
+  map.resources :calaisservices
 
-  map.resources :feeds
+  map.resources :feeds, :has_many => :stories
   map.resources :links
   map.resources :stories
 
