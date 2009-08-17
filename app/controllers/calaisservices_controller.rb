@@ -18,8 +18,9 @@ class CalaisservicesController < ApplicationController
     @calais = Calaisservice.new
 
     respond_to do |format|
-      format.xml  { render :xml => @calais }
-      format.json { render :json => @calais }
+      format.xml  { render :xml => @calais.xml_query( :id ) }
+      format.json { render :json => @calais.json_query( :id ) }
+      format.all { render_501 }
     end
   end
 

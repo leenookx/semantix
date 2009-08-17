@@ -48,6 +48,28 @@ function receiveBlogEntry() {
   if (ready == 4) {
     var myObject = JSON.parse(req.responseText);
     document.getElementById('blog').innerHTML = myObject.blog.entry;
+
+    queryCalais();
+  }
+}
+
+function queryCalais() {
+  req = getXMLHTTPRequest();
+  if (req) {
+    req.onreadystatechange = receiveCalaisResponse;
+    method = "GET";
+    url = "/calaisservices/"+document.getElementById('blog').innerHTML+".json";
+    params = "";
+    req.open(method, url, true);
+    req.send(params);
+  }
+}
+
+function receiveCalaisResponse() {
+  var ready = req.readyState;
+  if (ready == 4) {
+    var myObject = JSON.parse(req.responseText);
+    document.getElementById('calais').innerHTML = myObject.doc.entry;
   }
 }
 
@@ -55,6 +77,7 @@ function receiveBlogEntry() {
     <p>Blog entry #
     <input id="search_input" />
     <div class="blog" id="blog"></div> 
+    <div class="json" id="calais"></div> 
     </p>
   </BODY>
 </HTML>
