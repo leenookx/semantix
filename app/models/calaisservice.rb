@@ -11,7 +11,7 @@ class Calaisservice < ActiveResource::Base
 
     def json_query query=""
         client = CalaisClient.new( query )
-        return client.dump_raw_response
+        return client.to_json
     end
 end
 

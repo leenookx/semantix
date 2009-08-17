@@ -58,7 +58,7 @@ function queryCalais() {
   if (req) {
     req.onreadystatechange = receiveCalaisResponse;
     method = "GET";
-    url = "/calaisservices/"+document.getElementById('blog').innerHTML+".json";
+    url = "/calaisservices/query.json";
     params = "";
     req.open(method, url, true);
     req.send(params);
@@ -68,8 +68,12 @@ function queryCalais() {
 function receiveCalaisResponse() {
   var ready = req.readyState;
   if (ready == 4) {
+    document.getElementById('debug').innerHTML = req.responseText;
     var myObject = JSON.parse(req.responseText);
-    document.getElementById('calais').innerHTML = myObject.doc.entry;
+    document.getElementById('calais').innerHTML = myObject.doc;
+  }
+  else {
+    document.getElementById('calais').innerHTML = "Calais being queried...";
   }
 }
 
@@ -77,7 +81,8 @@ function receiveCalaisResponse() {
     <p>Blog entry #
     <input id="search_input" />
     <div class="blog" id="blog"></div> 
-    <div class="json" id="calais"></div> 
+    <div class="calais_raw" id="calais"></div>
+    <div class="debug" id="debug></div>
     </p>
   </BODY>
 </HTML>

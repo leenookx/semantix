@@ -43,6 +43,10 @@ class CalaisClient < Object
     def dump_raw_response
         puts @response
     end
+
+    def to_json
+        return @response
+    end
                                 
   private
                
