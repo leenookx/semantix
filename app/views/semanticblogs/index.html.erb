@@ -71,7 +71,7 @@ function receiveCalaisResponse() {
   if (ready == 4) {
     document.getElementById('debug').innerHTML = req.responseText;
     var myObject = JSON.parse(req.responseText);
-    document.getElementById('calais').innerHTML = myObject.doc;
+    document.getElementById('calais').innerHTML = myObject.response;
   }
   else {
     document.getElementById('calais').innerHTML = "Calais being queried...";
