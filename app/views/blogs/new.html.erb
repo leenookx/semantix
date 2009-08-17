@@ -4,6 +4,16 @@
   <%= f.error_messages %>
 
   <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :entry %><br />
+    <%= f.text_field :entry %>
+  </p>
+
+  <p>
     <%= f.submit 'Create' %>
   </p>
 <% end %>
