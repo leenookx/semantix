@@ -1,10 +1,9 @@
-#!/usr/bin/ruby
 
 require 'rubygems'
 require 'json'
 require 'lib/rest_client'
 
-class CalaisFetcher < Object 
+class CalaisClient < Object 
     LICENSE_ID = YAML::load_file('keys.yml')['calais']
     C_URI = URI.parse('http://api.opencalais.com/enlighten/rest/')
  

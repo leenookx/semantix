@@ -1,4 +1,3 @@
-#!/usr/bin/ruby
 
 require 'net/http'
 require 'hpricot'
