@@ -9,7 +9,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090816195648) do
+ActiveRecord::Schema.define(:version => 20090817065632) do
+
+  create_table "blogcomments", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blogs", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "entry",      :limit => 4096
+  end
 
   create_table "feeds", :force => true do |t|
     t.string   "url"
