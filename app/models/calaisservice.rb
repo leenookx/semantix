@@ -9,7 +9,7 @@ class Calaisservice < ActiveResource::Base
     def xml_query query=""
     end
 
-    def json_query query=""
+    def json_query(query)
         client = CalaisClient.new( query )
         return client.to_json
     end

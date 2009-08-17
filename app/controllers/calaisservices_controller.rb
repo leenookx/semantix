@@ -18,8 +18,6 @@ class CalaisservicesController < ApplicationController
     @calais = Calaisservice.new
 
     respond_to do |format|
-      format.xml  { render :xml => @calais.xml_query( :id ) }
-      format.json { render :json => @calais.json_query( :id ) }
       format.all { render_501 }
     end
   end
@@ -45,7 +43,10 @@ class CalaisservicesController < ApplicationController
   # POST /calaisservices.xml
   def create
 
+    @calais = Calaisservice.new
+
     respond_to do |format|
+      format.json { render :json => @calais.json_query( params[:query] ) }
       format.all  { render_501 }
     end
   end

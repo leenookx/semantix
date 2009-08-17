@@ -57,10 +57,11 @@ function queryCalais() {
   req = getXMLHTTPRequest();
   if (req) {
     req.onreadystatechange = receiveCalaisResponse;
-    method = "GET";
-    url = "/calaisservices/query.json";
-    params = "";
+    method = "POST";
+    url = "/calaisservices.json";
+    params = "<query>"+document.getElementById('blog').innerHTML+"</query>";
     req.open(method, url, true);
+    req.setRequestHeader("Content-Type", "text/xml");
     req.send(params);
   }
 }
