@@ -1,0 +1,2 @@
+class SemanticblogsController < ApplicationController
+end

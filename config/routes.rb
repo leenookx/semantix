@@ -1,5 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :blogs
+  map.resources :semanticblogs
 
   map.resources :feeds
   map.resources :links
