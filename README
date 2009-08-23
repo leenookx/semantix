@@ -17,3 +17,31 @@ Also:
     ferret
     acts_as_ferret (although this is installed as a plugin)
 
+
+Installation
+------------
+
+There's no real installation steps except for downloading the code from the github repository at http://github.com/leenookx/semantix/tree/master.
+
+
+Running
+-------
+
+To run the system simply execute the following in a console window:
+
+    # cd semantix
+    # scripts/server
+
+then, point your browser at http://localhost:3000 and away you go!
+
+
+Interactivity
+-------------
+
+As it's my intention for the system to be an interactive service, I've set up some ways for you to interact with it:
+
+    email:   semantix2009@googlemail.com
+    twitter: semantix2009
+
+NOTE: At the moment there are no ingestion mechanisms associated with them, but watch this space as they should be soon.
+
