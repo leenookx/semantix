@@ -16,6 +16,10 @@ Also:
     rubyrss
     ferret
     acts_as_ferret (although this is installed as a plugin)
+    chronic
+    packet
+
+(you can probably get away with: 'sudo gem install simple-rss rubyrss ...')
 
 
 Installation
