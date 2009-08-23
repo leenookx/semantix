@@ -44,6 +44,7 @@ To run the system simply execute the following in a console window:
 
     # cd semantix
     # scripts/server
+    # rake backgroundrb:start
 
 then, point your browser at http://localhost:3000 and away you go!
 
