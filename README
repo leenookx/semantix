@@ -23,6 +23,15 @@ Installation
 
 There's no real installation steps except for downloading the code from the github repository at http://github.com/leenookx/semantix/tree/master.
 
+You will need to create a keys.yml file which contains your API access keys for the various web-based systems that semantix communicates with. Currently these are:
+
+    * OpenCalais: http://www.opencalais.com
+
+So, your keys.yml file needs to look something like this:
+
+    calais:
+        <key>
+
 
 Running
 -------
