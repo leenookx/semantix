@@ -1,5 +1,5 @@
 Description:
-    The worker generator creates stubs for a new worker.
+    The worker generator creates stubs for a new BackgrounDRb worker.
 
     The generator takes a worker name as its argument.  The worker name may be
     given in CamelCase or under_score and should not be suffixed with 'Worker'.

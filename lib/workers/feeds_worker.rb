@@ -1,4 +1,4 @@
-class FeedsWorker < BackgrounDRb::Rails
+class FeedsWorker < BackgrounDRb::MetaWorker
 
   set_worker_name :feeds_worker
 

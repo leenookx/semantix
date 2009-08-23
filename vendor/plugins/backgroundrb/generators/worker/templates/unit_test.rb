@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '<%= '/..' * class_nesting_depth %>/../test_helper'
-require "#{RAILS_ROOT}/vendor/plugins/backgroundrb/backgroundrb.rb"
 require "#{RAILS_ROOT}/lib/workers/<%= file_name %>_worker"
+require "#{RAILS_ROOT}/vendor/plugins/backgroundrb/lib/backgroundrb.rb"
 require 'drb'
 
 class <%= class_name %>WorkerTest < Test::Unit::TestCase
