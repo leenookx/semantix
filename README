@@ -44,7 +44,7 @@ To run the system simply execute the following in a console window:
 
     # cd semantix
     # script/server
-    # script/backgroundrb
+    # script/backgroundrb start
 
 then, point your browser at http://localhost:3000 and away you go!
 
