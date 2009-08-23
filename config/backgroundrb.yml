@@ -7,5 +7,5 @@ host: localhost
 database_yml: config/database.yml
 acl: 
   deny: all
-  allow: localhost 127.0.0.1
+  allow: localhost 127.0.0.1 192.168.1.
   order: deny,allow
