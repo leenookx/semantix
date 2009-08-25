@@ -1,0 +1,13 @@
+Using BackgrounDRb is a pain since the documentation and examples are so poor. Here's some notes on how I'm using it.
+
+Injecting a worker
+
+  # script/console
+  # >> MiddleMan.new_worker(:worker => :feeds_worker, :worker_key => 2345, :do_work -> 1)
+
+Then:
+
+  # bots/background_monitor
+
+Should show you all of the workers currently running, including the one you just kicked off.
+

@@ -6,7 +6,7 @@ require 'rss/2.0'
 require 'open-uri'
 require 'active_record'
 
-feed_id = 1
+feed_id = ARGV.pop
 
 ActiveRecord::Base.logger = Logger.new(STDERR)
 ActiveRecord::Base.colorize_logging = true
@@ -18,23 +18,48 @@ ActiveRecord::Base.establish_connection(
 
 require 'app/models/feed.rb'
 
-record = Feed.find( feed_id )
-url = record.url
+class FeedGrabber < Object
+    def initialize(feed_id)
+        @fid = feed_id
+    end
 
-content = ""
-open(url) do |s| content = s.read end
-cache_file = 'local_cache/'+`uuidgen`+'.feed'
-# Try and parse the feed, using validation
-begin
-    rss = RSS::Parser.parse(content, true)
-rescue
-    # Something went wrong with the validation, so let's go without it...
-    rss = RSS::Parser.parse(content, false)
+    def go
+        find_record
+        grab_rss
+        update_feed_records
+        dump_stories
+    end
+
+  private
+    def find_record()
+        record = Feed.find( @fid )      
+        @url = record.url 
+    end
+
+    def grab_rss
+        @content = ""
+        open(@url) do |s| @content = s.read end
+        @cache_file = 'local_cache/'+`uuidgen`+'.feed'
+        # Try and parse the feed, using validation
+        begin
+            @rss = RSS::Parser.parse(@content, true)
+        rescue
+            # Something went wrong with the validation, so let's go without it...
+            @rss = RSS::Parser.parse(@content, false)
+        end
+    end
+
+    def update_feed_records
+        Feed.update(@fid, {:description => @rss.channel.description, :cache_file => @cache_file, :published => Time.now})
+    end
+
+    def dump_stories
+        # Write the feed out to disk
+        file = File.new(@cache_file, "w+")
+        file << @content
+    end
 end
 
-Feed.update(feed_id, {:description => rss.channel.description, :cache_file => cache_file, :published => Time.now})
-
-# Write the feed out to disk
-file = File.new(cache_file, "w+")
-file << content
+f = FeedGrabber.new( feed_id )
+f.go
  

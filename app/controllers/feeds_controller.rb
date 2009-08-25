@@ -45,6 +45,11 @@ class FeedsController < ApplicationController
     respond_to do |format|
       if @feed.save
         flash[:notice] = 'Feed was successfully created.'
+
+        # Create a task for updating the feed.
+        key = MiddleMan.new_worker(:worker => :feeds_worker, :worker_key => @feed.id)
+        MiddleMan.worker(:feeds_worker, key).async_do_work(:feed_id => @feed.id)
+
         format.html { redirect_to(@feed) }
         format.xml  { render :xml => @feed, :status => :created, :location => @feed }
       else
