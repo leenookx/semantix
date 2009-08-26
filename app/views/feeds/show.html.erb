@@ -1,4 +1,9 @@
 <p>
+  <b>Description:</b>
+  <%=h @feed.description %>
+</p>
+
+<p>
   <b>Url:</b>
   <%=h @feed.url %>
 </p>
@@ -6,6 +11,16 @@
 <p>
   <b>Interval:</b>
   <%=h @feed.interval %>
+</p>
+
+<p>
+  <b>Local cache file:</b>
+  <%=h @feed.cache_file %>
+</p>
+
+<p>
+  <b>Last Update:</b>
+  <%=h @feed.published %>
 </p>
 
 

@@ -1,9 +1,8 @@
 #!/usr/bin/ruby
 
 require 'rubygems'
-require 'rss/1.0'
-require 'rss/2.0'
 require 'open-uri'
+require 'feed-normalizer'
 require 'active_record'
 
 feed_id = ARGV.pop
@@ -26,8 +25,9 @@ class FeedGrabber < Object
     def go
         find_record
         grab_rss
-        update_feed_records
         dump_stories
+        validate_feed
+        update_feed_records
     end
 
   private
@@ -39,24 +39,33 @@ class FeedGrabber < Object
     def grab_rss
         @content = ""
         open(@url) do |s| @content = s.read end
-        @cache_file = 'local_cache/'+`uuidgen`+'.feed'
-        # Try and parse the feed, using validation
+        @cache_file = 'local_cache/'+`uuidgen -r`.strip+'.feed'
+        Feed.update(@fid, {:cache_file => @cache_file, :published => Time.now})
+    end
+
+    def validate_feed
+        # Try and parse the feed
+        puts @cache_file
         begin
-            @rss = RSS::Parser.parse(@content, true)
+            @rss = FeedNormalizer::FeedNormalizer.parse open( @cache_file )
+            puts @rss.title
+        rescue OpenURI::HTTPError => e
+            puts "Looks like the feed URL is not valid. (" + e.message + ")"
         rescue
-            # Something went wrong with the validation, so let's go without it...
-            @rss = RSS::Parser.parse(@content, false)
+            puts "Some other kind of error has occurred: " + $!
         end
     end
 
     def update_feed_records
-        Feed.update(@fid, {:description => @rss.channel.description, :cache_file => @cache_file, :published => Time.now})
+        puts @rss.title
+        Feed.update(@fid, :description => @rss.title)
     end
 
     def dump_stories
         # Write the feed out to disk
         file = File.new(@cache_file, "w+")
         file << @content
+        file.close
     end
 end
 
