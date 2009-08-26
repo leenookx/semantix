@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090823220543) do
+ActiveRecord::Schema.define(:version => 20090826063401) do
 
   create_table "bdrb_job_queues", :force => true do |t|
     t.binary   "args"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20090823220543) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "details",    :limit => 4096
+    t.boolean  "read"
   end
 
 end
