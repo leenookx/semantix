@@ -12,12 +12,11 @@ Requirements
 This is a ruby-on-rails based application, so you need that!
 
 Also:
-    simple-rss
-    rubyrss
     ferret
     acts_as_ferret (although this is installed as a plugin)
     chronic
     packet
+    feed-normaliser
 
 (you can probably get away with: 'sudo gem install simple-rss rubyrss ...')
 
