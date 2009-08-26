@@ -43,7 +43,6 @@ class FeedGrabber < Object
   private
     def find_record()
         record = Feed.find( @fid )
-
         return record
     end
 
@@ -68,6 +67,8 @@ class FeedGrabber < Object
         begin
             @rss = FeedNormalizer::FeedNormalizer.parse open( @cache_file )
             puts @rss.title
+            interval = @rss.ttl.nil ? 60 : @rss.ttl
+            Feed.update(@fid, {:interval => interval})
         rescue OpenURI::HTTPError => e
             puts "Looks like the feed URL is not valid. (" + e.message + ")"
         rescue
