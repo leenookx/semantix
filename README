@@ -17,6 +17,8 @@ Also:
     chronic
     packet
     feed-normaliser
+    daemons (used by workling)
+    starling (used by workling)
 
 (you can probably get away with: 'sudo gem install simple-rss rubyrss ...')
 
@@ -44,6 +46,8 @@ To run the system simply execute the following in a console window:
     # cd semantix
     # script/server
     # script/backgroundrb start
+    # sudo starling -d -p 22122
+    # scripts/workling_client start
 
 then, point your browser at http://localhost:3000 and away you go!
 
