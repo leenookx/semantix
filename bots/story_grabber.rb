@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'rubygems'
-require 'rss'
 require 'open-uri'
 require 'active_record'
+require 'feed-normalizer'
 
 require File.dirname(__FILE__) + '/../config/boot'
 ENV["RAILS_ENV"]='development'
@@ -44,26 +44,20 @@ class StoryGrabber < Object
         contents = String.new
 
         begin
-            File.open(@cache_file) do |f|
-                contents = f.read
-            end
-
-            # Try and parse the feed, using validation
             begin
-                feed = RSS::Parser.parse(contents, true)
+                feed = FeedNormalizer::FeedNormalizer.parse open( @cache_file )
             rescue
-                # Something went wrong with the validation, so let's go without it...
-                feed = RSS::Parser.parse(contents, false)
+                puts "something went wrong..."
             end
 
             if feed.nil?
                 puts "Sorry, that URL is not RSS 0.9x/1.0/2.0 or Atom 1.0 and can't be processed right now."
             else
-                puts feed.channel.description
+                puts feed.title
 
-                feed.items.each do |story|
+                feed.entries.each do |story|
                     puts "#{story.title}"
-                    @feed_record.stories.create(:feed_id => @fid, :url => story.link, :details => story.description)
+                    @feed_record.stories.create(:feed_id => @fid, :url => story.url, :details => story.content)
                 end
 
                 # There seems to be a bug in ferret that means that this
