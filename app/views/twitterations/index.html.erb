@@ -1,18 +1,56 @@
-<h1>Listing twitterations</h1>
+<script type="text/javascript">
 
-<table>
-  <tr>
-  </tr>
+function getXMLHTTPRequest() {
+  var xRequest = null;
+  if (window.XMLHttpRequest) {
+    xRequest = new XMLHttpRequest();
+  }
+  else if (typeof ActiveXObject != "undefined") {
+    xRequest = new ActiveXObject("Microsoft/XMLHTTP");
+  }
 
-<% @twitterations.each do |twitterations| %>
-  <tr>
-    <td><%= link_to 'Show', twitterations %></td>
-    <td><%= link_to 'Edit', edit_twitterations_path(twitterations) %></td>
-    <td><%= link_to 'Destroy', twitterations, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
-</table>
+  return xRequest;
+}
 
-<br />
+function queryTwitter() {
+  var req = getXMLHTTPRequest();
+  if (req) {
+    req.onreadystatechange = receiveTwitterResponse;
+    req.open("GET", "http://search.twitter.com/trends.json", true);
+    req.send("");
+  }
+}
 
-<%= link_to 'New twitterations', new_twitterations_path %>
+function receiveTwitterResponse() {
+  var ready = this.readyState;
+  if (ready == 0) {
+    document.getElementById('status').innerHTML = "uninitialised";
+  }
+  else if (ready == 1) {
+    document.getElementById('status').innerHTML = "open";
+  }
+  else if (ready == 2) {
+    document.getElementById('status').innerHTML = "sent";
+  }
+  else if (ready == 3) {
+    document.getElementById('status').innerHTML = "receiving";
+  }
+  else if (ready == 4) {
+    document.getElementById('status').innerHTML = "loaded (" + this.status + " - " + this.statusText + ")";
+
+      var result = JSON.parse(this.responseText);
+      var point = document.getElementById('twittertrends');
+      for (var i = 0; i < result.trends.length; i++) {
+        point.append(document.createTextNode( result.trends[i].name ));
+      }
+  }
+}
+
+window.onload = queryTwitter;
+
+</script>
+<h1>Current Twitter Trends</h1>
+<div id="twittertrends">
+</div>
+<div id="status">
+</div>

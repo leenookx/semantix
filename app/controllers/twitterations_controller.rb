@@ -2,7 +2,7 @@ class TwitterationsController < ApplicationController
   # GET /twitterations
   # GET /twitterations.xml
   def index
-    @twitterations = Twitterations.all
+    @twitterations = Twitteration.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class TwitterationsController < ApplicationController
   # GET /twitterations/1
   # GET /twitterations/1.xml
   def show
-    @twitterations = Twitterations.find(params[:id])
+    @twitterations = Twitteration.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -24,7 +24,7 @@ class TwitterationsController < ApplicationController
   # GET /twitterations/new
   # GET /twitterations/new.xml
   def new
-    @twitterations = Twitterations.new
+    @twitterations = Twitteration.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -34,13 +34,13 @@ class TwitterationsController < ApplicationController
 
   # GET /twitterations/1/edit
   def edit
-    @twitterations = Twitterations.find(params[:id])
+    @twitterations = Twitteration.find(params[:id])
   end
 
   # POST /twitterations
   # POST /twitterations.xml
   def create
-    @twitterations = Twitterations.new(params[:twitterations])
+    @twitterations = Twitteration.new(params[:twitterations])
 
     respond_to do |format|
       if @twitterations.save
@@ -57,7 +57,7 @@ class TwitterationsController < ApplicationController
   # PUT /twitterations/1
   # PUT /twitterations/1.xml
   def update
-    @twitterations = Twitterations.find(params[:id])
+    @twitterations = Twitteration.find(params[:id])
 
     respond_to do |format|
       if @twitterations.update_attributes(params[:twitterations])
@@ -74,7 +74,7 @@ class TwitterationsController < ApplicationController
   # DELETE /twitterations/1
   # DELETE /twitterations/1.xml
   def destroy
-    @twitterations = Twitterations.find(params[:id])
+    @twitterations = Twitteration.find(params[:id])
     @twitterations.destroy
 
     respond_to do |format|
