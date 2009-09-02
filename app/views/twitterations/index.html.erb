@@ -1,0 +1,18 @@
+<h1>Listing twitterations</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @twitterations.each do |twitterations| %>
+  <tr>
+    <td><%= link_to 'Show', twitterations %></td>
+    <td><%= link_to 'Edit', edit_twitterations_path(twitterations) %></td>
+    <td><%= link_to 'Destroy', twitterations, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New twitterations', new_twitterations_path %>

@@ -1,0 +1,12 @@
+<h1>Editing twitterations</h1>
+
+<% form_for(@twitterations) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @twitterations %> |
+<%= link_to 'Back', twitterations_path %>
