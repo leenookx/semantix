@@ -1,8 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :twitterations
 
-  map.resources :twitterations
-
   map.resources :blogs
   map.resources :semanticblogs
   map.resources :calaisservices
