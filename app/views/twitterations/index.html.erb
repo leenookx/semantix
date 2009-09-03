@@ -38,11 +38,13 @@ function receiveTwitterResponse() {
   else if (ready == 4) {
     document.getElementById('status').innerHTML = "loaded (" + this.status + " - " + this.statusText + ")";
 
+    if this.status == 200
       var result = JSON.parse(this.responseText);
       var point = document.getElementById('twittertrends');
       for (var i = 0; i < result.trends.length; i++) {
         point.append(document.createTextNode( result.trends[i].name ));
       }
+    }
   }
 }
 
