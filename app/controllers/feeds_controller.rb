@@ -46,11 +46,6 @@ class FeedsController < ApplicationController
       if @feed.save
         flash[:notice] = 'Feed was successfully created.'
 
-        # Now we know that the feed has been saved safely to the
-        # database, let's start checking that it's ok and
-        # grabbing the lovely new data.
-        FeedWorker.async_check_feed(:feedid => params[:id])
-
         format.html { redirect_to(@feed) }
         format.xml  { render :xml => @feed, :status => :created, :location => @feed }
       else
