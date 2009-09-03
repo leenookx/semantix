@@ -7,5 +7,5 @@ host = "localhost"
 port = 22122
 starling = MemCache.new "#{host}:#{port}"
 
-starling.set 'feed_worker__process_all_feds', {}
+starling.set 'feed_worker__process_all_feeds', {}
 
