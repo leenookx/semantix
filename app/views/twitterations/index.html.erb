@@ -15,15 +15,26 @@ function queryTwitter() {
 }
 
 function receiveTwitterResponse(results) {
-  var result = JSON.parse(results);
-  var point = document.getElementById('twittertrends');
-  for (var i = 0; i < result.trends.length; i++) {
-    point.append(document.createTextNode( result.trends[i].name ));
+  if (results != "") {
+    showStatus("done.");
+    var result = JSON.parse(results);
+    var point = document.getElementById('twittertrends');
+    for (var i = 0; i < result.trends.length; i++) {
+      point.append(document.createTextNode( result.trends[i].name ));
+    }
+  }
+  else {
+    showStatus("Bad AJAX results");
   }
 }
 
+function showStatus(message) {
+  var status = document.getElementById('status');
+  status.innerHTML = message;
+}
+
 Event.observe(window, 'load', function() {
-  alert('page loaded');
+  showStatus("Querying twitter...");
   queryTwitter();
 });
 
