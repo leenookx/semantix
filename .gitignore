@@ -3,3 +3,4 @@ tmp/*
 index/*
 local_cache/*
 keys.yml
+db/development.sqlite3
