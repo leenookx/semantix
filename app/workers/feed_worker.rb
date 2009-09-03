@@ -3,6 +3,12 @@ require 'feed-normalizer'
 
 class FeedWorker < Workling::Base
 
+  def process_all_feeds
+    Feed.all.each do |f|
+      FeedWorker.async_check_feed(:feedid => f.feed_id)
+    end
+  end
+
   def check_feed(options)
     feed = Feed.find(options[:feedid])
     if feed != nil

@@ -16,7 +16,10 @@ Also:
     acts_as_ferret (although this is installed as a plugin)
     chronic
     packet
-    feed-normaliser
+    feed-normalizer
+    workling
+    memcached (used by workling)
+    memcache-client (used by worklin)
     daemons (used by workling)
     starling (used by workling)
 
@@ -45,9 +48,12 @@ To run the system simply execute the following in a console window:
 
     # cd semantix
     # script/server
-    # script/backgroundrb start
-    # sudo starling -d -p 22122
+    # starling -d -P tmp/pids/starling.pid -q log/
     # scripts/workling_client start
+
+now, make sure your crobtab contains:
+
+1 * * * * $RAILS_ROOT/app/crontab/feeder.sh 
 
 then, point your browser at http://localhost:3000 and away you go!
 
