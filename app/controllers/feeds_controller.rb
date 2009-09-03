@@ -46,9 +46,10 @@ class FeedsController < ApplicationController
       if @feed.save
         flash[:notice] = 'Feed was successfully created.'
 
-        # Create a task for updating the feed.
-        key = MiddleMan.new_worker(:worker => :feeds_worker, :worker_key => @feed.id)
-        MiddleMan.worker(:feeds_worker, key).async_do_work(:feed_id => @feed.id)
+        # Now we know that the feed has been saved safely to the
+        # database, let's start checking that it's ok and
+        # grabbing the lovely new data.
+        FeedWorker.async_check_feed(:feedid => params[:id])
 
         format.html { redirect_to(@feed) }
         format.xml  { render :xml => @feed, :status => :created, :location => @feed }
