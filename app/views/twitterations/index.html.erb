@@ -1,54 +1,31 @@
+<%= javascript_include_tag 'prototype' %>
+
 <script type="text/javascript">
 
-function getXMLHTTPRequest() {
-  var xRequest = null;
-  if (window.XMLHttpRequest) {
-    xRequest = new XMLHttpRequest();
-  }
-  else if (typeof ActiveXObject != "undefined") {
-    xRequest = new ActiveXObject("Microsoft/XMLHTTP");
-  }
-
-  return xRequest;
-}
-
 function queryTwitter() {
-  var req = getXMLHTTPRequest();
-  if (req) {
-    req.onreadystatechange = receiveTwitterResponse;
-    req.open("GET", "http://search.twitter.com/trends.json", true);
-    req.send("");
+  var req = new Ajax.Request("http://search.twitter.com/trends.json", {
+          method: 'GET', 
+          onFailure: function(request) {
+            alert('AJAX doesnt work.');
+          }, 
+          onComplete: function(request) {
+            receiveTwitterResponse( request.responseText);
+          }
+      });
+}
+
+function receiveTwitterResponse(results) {
+  var result = JSON.parse(results);
+  var point = document.getElementById('twittertrends');
+  for (var i = 0; i < result.trends.length; i++) {
+    point.append(document.createTextNode( result.trends[i].name ));
   }
 }
 
-function receiveTwitterResponse() {
-  var ready = this.readyState;
-  if (ready == 0) {
-    document.getElementById('status').innerHTML = "uninitialised";
-  }
-  else if (ready == 1) {
-    document.getElementById('status').innerHTML = "open";
-  }
-  else if (ready == 2) {
-    document.getElementById('status').innerHTML = "sent";
-  }
-  else if (ready == 3) {
-    document.getElementById('status').innerHTML = "receiving";
-  }
-  else if (ready == 4) {
-    document.getElementById('status').innerHTML = "loaded (" + this.status + " - " + this.statusText + ")";
-
-    if this.status == 200
-      var result = JSON.parse(this.responseText);
-      var point = document.getElementById('twittertrends');
-      for (var i = 0; i < result.trends.length; i++) {
-        point.append(document.createTextNode( result.trends[i].name ));
-      }
-    }
-  }
-}
-
-window.onload = queryTwitter;
+Event.observe(window, 'load', function() {
+  alert('page loaded');
+  queryTwitter();
+});
 
 </script>
 <h1>Current Twitter Trends</h1>
