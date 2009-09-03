@@ -3,9 +3,10 @@ require 'feed-normalizer'
 
 class FeedWorker < Workling::Base
 
-  def process_all_feeds
+  def process_all_feeds(options)
+    puts "Starting to check all feeds..."
     Feed.all.each do |f|
-      FeedWorker.async_check_feed(:feedid => f.feed_id)
+      FeedWorker.async_check_feed(:feedid => f.id)
     end
   end
 
