@@ -1,4 +1,18 @@
+<%= javascript_include_tag 'validation' %>
+
 <h1>New feed</h1>
+
+<script type="text/javascript">
+function verifyFeedURL(s) {
+  alert(s );
+  if (! isUrl(s) ) {
+    alert('Feed URL is invalid.');
+    return false;
+  }
+  else
+    return true;
+}
+</script>
 
 <% form_for(@feed) do |f| %>
   <%= f.error_messages %>
@@ -12,7 +26,7 @@
     <%= f.text_field :interval %>
   </p>
   <p>
-    <%= f.submit 'Create' %>
+    <%= f.submit 'Create', :onClick => 'return verifyFeedURL( feed_url.value );' %>
   </p>
 <% end %>
 
