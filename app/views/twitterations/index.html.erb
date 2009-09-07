@@ -1,46 +1,34 @@
-<%= javascript_include_tag 'prototype' %>
+<html>
+<head>
+<%= javascript_include_tag 'jquery' %>
 
-<script type="text/javascript">
-
-function queryTwitter() {
-  var req = new Ajax.Request("http://search.twitter.com/trends.json", {
-          method: 'GET', 
-          onFailure: function(request) {
-            alert('AJAX doesnt work.');
-          }, 
-          onComplete: function(request) {
-            receiveTwitterResponse( request.responseText);
-          }
-      });
-}
-
-function receiveTwitterResponse(results) {
-  if (results != "") {
-    showStatus("done.");
-    var result = JSON.parse(results);
-    var point = document.getElementById('twittertrends');
-    for (var i = 0; i < result.trends.length; i++) {
-      point.append(document.createTextNode( result.trends[i].name ));
-    }
-  }
-  else {
-    showStatus("Bad AJAX results");
-  }
-}
-
-function showStatus(message) {
-  var status = document.getElementById('status');
-  status.innerHTML = message;
-}
-
-Event.observe(window, 'load', function() {
-  showStatus("Querying twitter...");
-  queryTwitter();
+<script>
+$(document).ready(function() {
+  $.getJSON("http://search.twitter.com/trends.json?callback=?", function(data) {
+    showStatus("twitter responded.");
+    $.each(data.trends, function(i,trend) {
+      $("<p>" + trend.name + "</p>").appendTo("#twitter");
+      if (i == data.trends.size) return false;
+    });
+  });
 });
 
+function idize(str) {
+  str = str.replace(/ /g, "-");
+  str = str.replace("#", "hash-");
+  str = str.replace("&", "amp-");
+  return str;
+}
+
+function showStatus(msg) {
+  var s_div = document.getElementById('status');
+  s_div.innerHTML = msg;
+}
 </script>
+</head>
+<body>
 <h1>Current Twitter Trends</h1>
-<div id="twittertrends">
-</div>
-<div id="status">
-</div>
+<div id="twitter"></div>
+<div id="status">Loading twitter trends...</div>
+</body>
+</html>
