@@ -22,6 +22,7 @@ Also:
     memcache-client (used by worklin)
     daemons (used by workling)
     starling (used by workling)
+    leenookx-feed-utils
 
 (you can probably get away with: 'sudo gem install simple-rss rubyrss ...')
 
