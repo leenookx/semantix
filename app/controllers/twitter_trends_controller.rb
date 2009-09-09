@@ -1,12 +1,14 @@
 class TwitterTrendsController < ApplicationController
   # GET /twitter_trends
   # GET /twitter_trends.xml
+  # GET /twitter_trends.json
   def index
     @twitter_trends = TwitterTrend.all
 
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @twitter_trends }
+      format.json  { render :json => @twitter_trends }
     end
   end
 
@@ -18,6 +20,7 @@ class TwitterTrendsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @twitter_trend }
+      format.json  { render :json => @twitter_trend }
     end
   end
 
