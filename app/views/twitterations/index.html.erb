@@ -21,7 +21,7 @@ function receiveTwitterResponse(results) {
     var point = document.getElementById('twittertrends');
     point.innerHTML = "<ol>";
     for (var i = 0; i < result.length; i++) {
-      point.innerHTML += "<li><a href='/poo'>" + result[i]['twitter_trend']['name'] + "</a></li>";
+      point.innerHTML += "<li><a href='#' onclick=''>" + result[i]['twitter_trend']['name'] + "</a></li>";
     }
     point.innerHTML += "</ol>";
   }

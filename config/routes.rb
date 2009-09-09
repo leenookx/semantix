@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :twitter_trends
 
-  map.resources :twitter_trend_heads
+  map.resources :twitter_trend_heads, :has_many => :twitter_trends
 
   map.resources :twitterations
 
@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :feeds, :has_many => :stories
   map.resources :links
   map.resources :stories
+  map.resources :topix
 
   map.root :controller => "home"
   map.connect ':controller/:action/:id'
