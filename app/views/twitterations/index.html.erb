@@ -21,7 +21,7 @@ function receiveTwitterResponse(results) {
     var point = document.getElementById('twittertrends');
     point.innerHTML = "<ol>";
     for (var i = 0; i < result.length; i++) {
-      point.innerHTML += "<li><a href='#' onclick=''>" + result[i]['twitter_trend']['name'] + "</a></li>";
+      point.innerHTML += "<li><a href='#' onclick='return queryTopix(\"" + result[i]['twitter_trend']['name'] + "\");' onmouseover=\"window.status = 'click me'; return true;\" onmouseout=\"window.status = ''; return true;\">" + result[i]['twitter_trend']['name'] + "</a></li>";
     }
     point.innerHTML += "</ol>";
   }
@@ -34,6 +34,42 @@ function showStatus(message) {
   var status = document.getElementById('status');
   status.innerHTML = message;
 }
+
+// Sanitise a string so it can be passed around more easily
+// and safely to queryable sources.
+function sanitize(string){
+  string = string.replace("#","");
+  string = string.replace(/ /g, "+");
+  string = string.toLowerCase();
+  
+  return encodeURI(string);
+}
+
+function queryTopix(keywords) {
+  // Clear out any old data that's hanging about.
+  var topix = document.getElementById('topix');
+  topix.innerHTML = "";
+
+  var req = new Ajax.Request("/topix/" + sanitize( keywords ) + ".rss", {
+          method: 'GET',
+          onFailure: function(request) {
+            alert('AJAX doesnt work.');
+          },
+          onComplete: function(request) {
+            receiveTopixResponse( request.responseText );
+          }
+      });
+
+  return true;
+}
+
+function receiveTopixResponse(results) {
+  if (results != "") {
+  }
+  else {
+    showStatus("Bad results from Topix");
+  }
+}
  
 Event.observe(window, 'load', function() {
   showStatus("Querying twitter...");
@@ -43,6 +79,8 @@ Event.observe(window, 'load', function() {
 </script>
 <h1>Current Twitter Trends</h1>
 <div id="twittertrends">
+</div>
+<div id="topix">
 </div>
 <div id="status">
 </div>
