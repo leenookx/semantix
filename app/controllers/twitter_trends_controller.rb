@@ -15,7 +15,12 @@ class TwitterTrendsController < ApplicationController
   # GET /twitter_trends/1
   # GET /twitter_trends/1.xml
   def show
-    @twitter_trend = TwitterTrend.find(params[:id])
+    # So, I've changed the paradigm here to not return a single
+    # record, but instead to find all records linked to a
+    # given trends head record. NOTE: Without the .all then you
+    # will only see the FIRST matching entry.
+    #@twitter_trend = TwitterTrend.find(params[:id])
+    @twitter_trend = TwitterTrend.scoped_by_head( params[:id] ).all
 
     respond_to do |format|
       format.html # show.html.erb
