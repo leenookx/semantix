@@ -1,0 +1,18 @@
+<p>
+  <b>Head:</b>
+  <%=h @twitter_trend.head %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @twitter_trend.name %>
+</p>
+
+<p>
+  <b>Url:</b>
+  <%=h @twitter_trend.url %>
+</p>
+
+
+<%= link_to 'Edit', edit_twitter_trend_path(@twitter_trend) %> |
+<%= link_to 'Back', twitter_trends_path %>

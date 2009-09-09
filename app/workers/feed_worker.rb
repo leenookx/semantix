@@ -13,7 +13,7 @@ class FeedWorker < Workling::Base
   def check_feed(options)
     feed = Feed.find(options[:feedid])
     if feed != nil
-      if time_diff_in_minutes( feed.published ) > 60
+      if feed.published.nil? or time_diff_in_minutes( feed.published ) > 60
         FeedWorker.async_grab_feed(options)
       end
     end

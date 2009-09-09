@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :twitter_trends
+
+  map.resources :twitter_trend_heads
+
   map.resources :twitterations
 
   map.resources :blogs

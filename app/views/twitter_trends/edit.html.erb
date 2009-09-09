@@ -1,0 +1,24 @@
+<h1>Editing twitter_trend</h1>
+
+<% form_for(@twitter_trend) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :head %><br />
+    <%= f.text_field :head %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @twitter_trend %> |
+<%= link_to 'Back', twitter_trends_path %>

@@ -1,0 +1,24 @@
+<h1>Listing twitter_trends</h1>
+
+<table>
+  <tr>
+    <th>Head</th>
+    <th>Name</th>
+    <th>Url</th>
+  </tr>
+
+<% @twitter_trends.each do |twitter_trend| %>
+  <tr>
+    <td><%=h twitter_trend.head %></td>
+    <td><%=h twitter_trend.name %></td>
+    <td><%=h twitter_trend.url %></td>
+    <td><%= link_to 'Show', twitter_trend %></td>
+    <td><%= link_to 'Edit', edit_twitter_trend_path(twitter_trend) %></td>
+    <td><%= link_to 'Destroy', twitter_trend, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New twitter_trend', new_twitter_trend_path %>
