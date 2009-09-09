@@ -24,7 +24,9 @@ Also:
     starling (used by workling)
     leenookx-feed-utils
 
-(you can probably get away with: 'sudo gem install simple-rss rubyrss ...')
+These can be easily installed:
+
+    rake gems:install
 
 
 Installation
