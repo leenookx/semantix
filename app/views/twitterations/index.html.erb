@@ -71,9 +71,9 @@ function receiveTopixResponse(results) {
     var feeditems = results.getElementsByTagName('item');
     var point = document.getElementById('topix');
     for (var i = 0; i < feeditems.length; i++) {
-      point.innerHTML += "<div id='story'>";
-      point.innerHTML += "<a href='" + feeditems[i].getElementsByTagName("link")[0].firstChild.nodeValue + "'>";
-      point.innerHTML += "<b>" + feeditems[i].getElementsByTagName("title")[0].firstChild.nodeValue + "</b></a>";
+      point.innerHTML += "<div id='story' class='story'>";
+      point.innerHTML += "<a href='" + feeditems[i].getElementsByTagName("link")[0].firstChild.nodeValue + "'>"
+                         + feeditems[i].getElementsByTagName("title")[0].firstChild.nodeValue + "</a>";
       point.innerHTML += feeditems[i].getElementsByTagName("description")[0].firstChild.nodeValue;
       point.innerHTML += "<b>Source:</b> " + feeditems[i].getElementsByTagName("source")[0].firstChild.nodeValue;
       point.innerHTML += " <em>(" + feeditems[i].getElementsByTagName("pubDate")[0].firstChild.nodeValue + ")</em>";
