@@ -24,7 +24,7 @@ function receiveTwitterResponse(results) {
     var point = document.getElementById('twittertrends');
     point.innerHTML = "<ol>";
     for (var i = 0; i < result.length; i++) {
-      point.innerHTML += "<li><a href='#' onclick='return queryTopix(\"" + result[i]['twitter_trend']['name'] + "\");' onmouseover=\"window.status = 'click me'; return true;\" onmouseout=\"window.status = ''; return true;\">" + result[i]['twitter_trend']['name'] + "</a></li>";
+      point.innerHTML += "<li><a href='#' onclick='return doQueries(\"" + result[i]['twitter_trend']['name'] + "\");' onmouseover=\"window.status = 'click me'; return true;\" onmouseout=\"window.status = ''; return true;\">" + result[i]['twitter_trend']['name'] + "</a></li>";
     }
     point.innerHTML += "</ol>";
   }
@@ -46,6 +46,13 @@ function sanitize(string){
   string = string.toLowerCase();
   
   return encodeURI(string);
+}
+
+function doQueries(keywords) {
+  queryTopix(keywords);
+  queryFlickr(keywords);
+
+  return true;
 }
 
 function queryTopix(keywords) {
@@ -71,25 +78,65 @@ function receiveTopixResponse(results) {
     var feeditems = results.getElementsByTagName('item');
     var point = document.getElementById('topix');
     for (var i = 0; i < feeditems.length; i++) {
-      point.innerHTML += "<div id='story' class='story'>";
-      point.innerHTML += "<a href='" + feeditems[i].getElementsByTagName("link")[0].firstChild.nodeValue + "'>"
-                         + feeditems[i].getElementsByTagName("title")[0].firstChild.nodeValue + "</a>";
-      point.innerHTML += feeditems[i].getElementsByTagName("description")[0].firstChild.nodeValue;
-      point.innerHTML += "<b>Source:</b> " + feeditems[i].getElementsByTagName("source")[0].firstChild.nodeValue;
-      point.innerHTML += " <em>(" + feeditems[i].getElementsByTagName("pubDate")[0].firstChild.nodeValue + ")</em>";
-      point.innerHTML += "<ul>";
+      var tmp = "<div id='story" + i + "' class='story'>"
+                + "<p class='story-header'><a href='" + feeditems[i].getElementsByTagName("link")[0].firstChild.nodeValue + "'>"
+                    + feeditems[i].getElementsByTagName("title")[0].firstChild.nodeValue + "</a></p>"
+                + "<p class='story-details'>" + feeditems[i].getElementsByTagName("description")[0].firstChild.nodeValue + "</p>"
+                + "<p class='story-footer'><b>Source:</b> " + feeditems[i].getElementsByTagName("source")[0].firstChild.nodeValue
+                         + " <em>(" + feeditems[i].getElementsByTagName("pubDate")[0].firstChild.nodeValue + ")</em></p>"
+                + "<p class='story-categories'>Categories: ";
       var categories = feeditems[i].getElementsByTagName('category');
       for (var j = 0; j < categories.length; j++) {
-        point.innerHTML += "<li>" + categories[j].firstChild.nodeValue + "</li>";
+        if (j > 0) {
+          tmp += ", ";
+        }
+        tmp += categories[j].firstChild.nodeValue;
       }
-      point.innerHTML += "</ul>";
-      point.innerHTML += "</div>";
+      tmp += "</p></div>";
+
+      point.innerHTML += tmp;
     }
   }
   else {
     showStatus("Bad results from Topix");
   }
 }
+
+function queryFlickr(keywords) {
+  // Clear out any old data that's hanging about.
+  var flickr = document.getElementById('flickr');
+  flickr.innerHTML = "";
+
+  var req = new Ajax.Request("/flickr/" + sanitize( keywords ) + ".json", {
+          method: 'GET',
+          onFailure: function(request) {
+            alert('AJAX doesnt work.');
+          },
+          onComplete: function(request) {
+            receiveFlickrResponse( request.responseText );
+          }
+      });
+
+  return true;
+}
+
+function receiveFlickrResponse(results) {
+  if (results != "") {
+    showStatus("done.");
+    var doc = JSON.parse(results);
+    var result = doc['items'];
+    var tmp = "";
+    var point = document.getElementById('flickr');
+    for (var i = 0; i < result.length; i++) {
+      tmp += "<img src='" + result[i]['media']['m'] + "'/>";
+    }
+    point.innerHTML = tmp;
+  }
+  else {
+    showStatus("Bad Flickr results.");
+  }
+}
+
  
 Event.observe(window, 'load', function() {
   showStatus("Querying twitter...");
@@ -100,4 +147,6 @@ Event.observe(window, 'load', function() {
 <h1>Current Twitter Trends</h1>
 <div id="twittertrends" class="twittertrends"></div>
 <div id="topix" class="topix"></div>
-<div id="status" class="status"></div>
+<div id="flickr" class="flickr"></div>
+
+<p><div id="status" class="status"></div></p>

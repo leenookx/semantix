@@ -1,4 +1,5 @@
-.topix { border: solid blue 1px; background-color: cyan }
-.status { border: solid red 1px; background-color: pink }
-.twittertrends { border: solid green 1px; background-color: #00FF66 }
+div.story { border: solid blue 1px; background-color: cyan }
+div.status { border: solid red 1px; background-color: pink }
+div.twittertrends { border: solid green 1px; background-color: #00FF66; width: 30% }
+div.flickr { border: solid cyan 1px; background-color: blue; margin-left: 500px; padding-left: 9px }
 

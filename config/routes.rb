@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :links
   map.resources :stories
   map.resources :topix
+  map.resources :flickr
 
   map.root :controller => "home"
   map.connect ':controller/:action/:id'
