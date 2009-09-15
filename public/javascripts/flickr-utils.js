@@ -25,6 +25,10 @@ function receiveFlickrResponse(results) {
     var point = document.getElementById('flickr');
     for (var i = 0; i < result.length; i++) {
       tmp += "<img src='" + result[i]['media']['m'] + "'/>";
+      var tags = result[i]['tags'].split(" ");
+      for (var j = 0; j < tags.length; j++) { 
+        addToTagCloud(tags[j], "", "flickr");
+      }
     }
     point.innerHTML = tmp;
   }
