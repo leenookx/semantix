@@ -19,8 +19,8 @@ function queryFlickr(keywords) {
 function receiveFlickrResponse(results) {
   if (results != "") {
     showStatus("done.");
-    var doc = JSON.parse(results);
-    var result = doc['items'];
+    var jdoc = results.evalJSON();
+    var result = jdoc['items'];
     var tmp = "";
     var point = document.getElementById('flickr');
     for (var i = 0; i < result.length; i++) {
