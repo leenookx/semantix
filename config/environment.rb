@@ -25,7 +25,7 @@ Rails::Initializer.run do |config|
   config.gem "daemons"
   config.gem "starling"
   config.gem "leenookx-feed-utils", :lib => "feed-utils", :version => ">0.0.1", :source => "http://gems.github.com"
-  config.gem "leenookx-tagcloud", :lib => "tagcloud", :version => ">0.0.0", :source => "http://gems.github.com"
+  config.gem "leenookx-tagcloud", :lib => "tagcloud", :version => ">=0.0.2", :source => "http://gems.github.com"
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
