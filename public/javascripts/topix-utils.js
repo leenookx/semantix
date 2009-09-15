@@ -34,6 +34,8 @@ function receiveTopixResponse(results) {
           tmp += ", ";
         }
         tmp += categories[j].firstChild.nodeValue;
+
+        addToTagCloud(categories[j].firstChild.nodeValue, "", "topix");
       }
       tmp += "</p></div>";
 

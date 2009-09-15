@@ -8,6 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :blogs
   map.resources :semanticblogs
   map.resources :calaisservices
+  map.resources :tagcloud
 
   map.resources :feeds, :has_many => :stories
   map.resources :links

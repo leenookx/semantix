@@ -4,6 +4,7 @@
 <%= javascript_include_tag 'twitter-utils' %>
 <%= javascript_include_tag 'topix-utils' %>
 <%= javascript_include_tag 'flickr-utils' %>
+<%= javascript_include_tag 'tagcloud-utils' %>
 
 <%= javascript_include_tag 'prototype' %>
  
@@ -25,6 +26,7 @@ Event.observe(window, 'load', function() {
 </script>
 <h1>Current Twitter Trends</h1>
 <div id="twittertrends" class="twittertrends"></div>
+<div id="tagcloud" class="tagcloud"></div>
 <div id="topix" class="topix"></div>
 <div id="flickr" class="flickr"></div>
 
