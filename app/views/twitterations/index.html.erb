@@ -21,6 +21,9 @@ function doQueries(keywords) {
 Event.observe(window, 'load', function() {
   showStatus("Querying twitter...");
   queryTwitter();
+
+  // Make sure we create a brand new tag cloud...
+  createNewTagCloud();
 });
  
 </script>
