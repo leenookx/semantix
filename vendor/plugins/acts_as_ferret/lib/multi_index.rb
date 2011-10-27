@@ -9,7 +9,7 @@ module ActsAsFerret #:nodoc:
       # ensure all models indexes exist
       @indexes = indexes
       indexes.each { |i| i.ensure_index_exists }
-      default_fields = indexes.inject([]) do |fields, idx| 
+      default_fields = indexes.inject([]) do |fields, idx|
         fields + [ idx.index_definition[:ferret][:default_field] ]
       end.flatten.uniq
       @options = {
@@ -22,14 +22,14 @@ module ActsAsFerret #:nodoc:
       limit = options.delete(:limit)
       offset = options.delete(:offset) || 0
       options[:limit] = :all
-      total_hits, result = super query, options, ar_options  
+      total_hits, result = super query, options, ar_options
       total_hits = result.size if ar_options[:conditions]
       # if limit && limit != :all
       #   result = result[offset..limit+offset-1]
       # end
       [total_hits, result]
     end
-    
+
     def determine_stored_fields(options)
       return nil unless options.has_key?(:lazy)
       stored_fields = []
@@ -42,12 +42,12 @@ module ActsAsFerret #:nodoc:
     def shared?
       false
     end
-      
+
   end
-  
+
   # This class can be used to search multiple physical indexes at once.
   class MultiIndex < MultiIndexBase
-    
+
     def extract_stored_fields(doc, stored_fields)
       ActsAsFerret::get_index_for(doc[:class_name]).extract_stored_fields(doc, stored_fields) unless stored_fields.blank?
     end
@@ -55,7 +55,7 @@ module ActsAsFerret #:nodoc:
     def total_hits(q, options = {})
       search(q, options).total_hits
     end
-    
+
     def search(query, options={})
       query = process_query(query, options)
       logger.debug "parsed query: #{query.to_s}"
@@ -72,8 +72,8 @@ module ActsAsFerret #:nodoc:
       #return false unless @reader
       # segfaults with 0.10.4 --> TODO report as bug @reader.latest?
       @reader and @reader.latest?
-      #@sub_readers.each do |r| 
-      #  return false unless r.latest? 
+      #@sub_readers.each do |r|
+      #  return false unless r.latest?
       #end
       #true
     end
@@ -82,16 +82,16 @@ module ActsAsFerret #:nodoc:
       ensure_searcher
       @searcher
     end
-    
+
     def doc(i)
       searcher[i]
     end
     alias :[] :doc
-    
+
     def query_parser
       @query_parser ||= Ferret::QueryParser.new(@options)
     end
-    
+
     def process_query(query, options = {})
       query = query_parser.parse(query) if query.is_a?(String)
       return query
@@ -106,7 +106,7 @@ module ActsAsFerret #:nodoc:
 
       def ensure_searcher
         unless latest?
-          @sub_readers = @indexes.map { |idx| 
+          @sub_readers = @indexes.map { |idx|
             begin
               reader = Ferret::Index::IndexReader.new(idx.index_definition[:index_dir])
               logger.debug "sub-reader opened: #{reader}"

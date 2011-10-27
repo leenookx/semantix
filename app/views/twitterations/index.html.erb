@@ -7,7 +7,7 @@
 <%= javascript_include_tag 'tagcloud-utils' %>
 
 <%= javascript_include_tag 'prototype' %>
- 
+
 <script type="text/javascript">
 
 function doQueries(keywords) {
@@ -17,7 +17,7 @@ function doQueries(keywords) {
   return true;
 }
 
- 
+
 Event.observe(window, 'load', function() {
   showStatus("Querying twitter...");
   queryTwitter();
@@ -25,7 +25,7 @@ Event.observe(window, 'load', function() {
   // Make sure we create a brand new tag cloud...
   createNewTagCloud();
 });
- 
+
 </script>
 <h1>Current Twitter Trends</h1>
 <div id="twittertrends" class="twittertrends"></div>

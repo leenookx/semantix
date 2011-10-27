@@ -49,21 +49,21 @@ module ActsAsFerret
         field_config.update ActsAsFerret::build_field_config( options[:additional_fields] )
         field_config.each do |field, config|
           if already_defined_fields.has_key?(field)
-            logger.info "ignoring redefinition of ferret field #{field}" if shared? 
+            logger.info "ignoring redefinition of ferret field #{field}" if shared?
           else
             already_defined_fields[field] = config
             logger.info "adding new field #{field} from class #{clazz.name} to index #{index_name}"
           end
         end
 
-        # update default field list to be used by the query parser, unless it 
+        # update default field list to be used by the query parser, unless it
         # was explicitly given by user.
         #
         # It will include all content fields *not* marked as :untokenized.
         # This fixes the otherwise failing CommentTest#test_stopwords. Basically
         # this means that by default only tokenized fields (which all fields are
-        # by default) will be searched. If you want to search inside the contents 
-        # of an untokenized field, you'll have to explicitly specify it in your 
+        # by default) will be searched. If you want to search inside the contents
+        # of an untokenized field, you'll have to explicitly specify it in your
         # query.
         unless index_definition[:user_default_field]
           # grab all tokenized fields

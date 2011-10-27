@@ -12,7 +12,7 @@ production:
   log_file: log/ferret_server.log
   log_level: warn
 
-# aaf won't try to use the DRb server in environments that are not 
+# aaf won't try to use the DRb server in environments that are not
 # configured here.
 #development:
 #  host: localhost

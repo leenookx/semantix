@@ -23,8 +23,8 @@ module ActsAsFerret
     end
 
     # Proxy any methods that require special return values in case of errors
-    { 
-      :highlight => [] 
+    {
+      :highlight => []
     }.each do |method_name, default_result|
       define_method method_name do |*args|
         args.unshift index_name

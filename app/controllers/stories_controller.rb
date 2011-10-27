@@ -8,7 +8,7 @@ class StoriesController < ApplicationController
   end
 
   layout 'stories', :except => [:auto_complete_for_search_query]
-  
+
   # GET /links
   # GET /links.xml
   def index

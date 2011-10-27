@@ -16,7 +16,7 @@ OptionParser.new do |optparser|
     puts optparser
     exit
   end
-  
+
   optparser.on('-R', '--root=PATH', 'Set RAILS_ROOT to the given string') do |r|
     $ferret_server_options['root'] = r
   end
@@ -40,7 +40,7 @@ end
 begin
   ENV['FERRET_USE_LOCAL_INDEX'] = 'true'
   ENV['RAILS_ENV'] = $ferret_server_options['environment']
-  
+
   # determine RAILS_ROOT unless already set
   RAILS_ROOT = $ferret_server_options['root'] || File.join(File.dirname(__FILE__), *(['..']*4)) unless defined? RAILS_ROOT
   # check if environment.rb is present

@@ -54,7 +54,7 @@ module ActsAsFerret
           @documents = []
         end
       end
-      
+
       module ClassMethods
         # overriding aaf to return the documents fetched via RDig
         def records_for_rebuild(batch_size = 1000, &block)
@@ -137,12 +137,12 @@ module ActsAsFerret
         def ferret_key_with_md5
           Digest::MD5.hexdigest(ferret_key_without_md5)
         end
-        
+
         def to_s
           "Page at #{id}, title: #{title}"
         end
       end
     end
   end
-  
+
 end

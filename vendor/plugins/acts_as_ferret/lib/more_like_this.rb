@@ -9,7 +9,7 @@ module ActsAsFerret #:nodoc:
         # (i.e. characteristic) terms from this document, and then build a
         # query from those which is run against the whole index. Which terms
         # are interesting is decided on variour criteria which can be
-        # influenced by the given options. 
+        # influenced by the given options.
         #
         # The algorithm used here is a quite straight port of the MoreLikeThis class
         # from Apache Lucene.
@@ -18,14 +18,14 @@ module ActsAsFerret #:nodoc:
         # :field_names : Array of field names to use for similarity search (mandatory)
         # :min_term_freq => 2,  # Ignore terms with less than this frequency in the source doc.
         # :min_doc_freq => 5,   # Ignore words which do not occur in at least this many docs
-        # :min_word_length => nil, # Ignore words shorter than this length (longer words tend to 
+        # :min_word_length => nil, # Ignore words shorter than this length (longer words tend to
         #                            be more characteristic for the document they occur in).
         # :max_word_length => nil, # Ignore words if greater than this len.
         # :max_query_terms => 25,  # maximum number of terms in the query built
         # :max_num_tokens => 5000, # maximum number of tokens to examine in a single field
-        # :boost => false,         # when true, a boost according to the relative score of 
+        # :boost => false,         # when true, a boost according to the relative score of
         #                            a term is applied to this Term's TermQuery.
-        # :similarity => 'DefaultAAFSimilarity'   # the similarity implementation to use (the default 
+        # :similarity => 'DefaultAAFSimilarity'   # the similarity implementation to use (the default
         #                                           equals Ferret's internal similarity implementation)
         # :analyzer => 'Ferret::Analysis::StandardAnalyzer' # class name of the analyzer to use
         # :append_to_query => nil # proc taking a query object as argument, which will be called after generating the query. can be used to further manipulate the query used to find related documents, i.e. to constrain the search to a given class in single table inheritance scenarios
@@ -40,7 +40,7 @@ module ActsAsFerret #:nodoc:
             :max_word_length => 0, # Ignore words if greater than this len. Default is not to ignore any words.
             :max_query_terms => 25,  # maximum number of terms in the query built
             :max_num_tokens => 5000, # maximum number of tokens to analyze when analyzing contents
-            :boost => false,      
+            :boost => false,
             :similarity => 'ActsAsFerret::MoreLikeThis::DefaultAAFSimilarity',  # class name of the similarity implementation to use
             :analyzer => 'Ferret::Analysis::StandardAnalyzer', # class name of the analyzer to use
             :append_to_query => nil,
@@ -75,14 +75,14 @@ module ActsAsFerret #:nodoc:
         end
 
         protected
-        
+
         def create_query(key, priority_queue, options={})
           query = Ferret::Search::BooleanQuery.new
           qterms = 0
           best_score = nil
           while(cur = priority_queue.pop)
             term_query = Ferret::Search::TermQuery.new(cur.field, cur.word)
-            
+
             if options[:boost]
               # boost term according to relative score
               # TODO untested
@@ -90,19 +90,19 @@ module ActsAsFerret #:nodoc:
               term_query.boost = cur.score / best_score
             end
             begin
-              query.add_query(term_query, :should) 
+              query.add_query(term_query, :should)
             rescue Ferret::Search::BooleanQuery::TooManyClauses
               break
             end
             qterms += 1
             break if options[:max_query_terms] > 0 && qterms >= options[:max_query_terms]
           end
-          # exclude the original record 
+          # exclude the original record
           query.add_query(query_for_record(key), :must_not)
           return query
         end
 
-        
+
 
         # creates a term/term_frequency map for terms from the fields
         # given in options[:field_names]
@@ -140,7 +140,7 @@ module ActsAsFerret #:nodoc:
               end
               puts "have doc: #{doc[:id]} with #{field} == #{content}"
               token_count = 0
-              
+
               ts = options[:analyzer].token_stream(field, content)
               while token = ts.next
                 break if (token_count+=1) > max_num_tokens
@@ -152,23 +152,23 @@ module ActsAsFerret #:nodoc:
           term_freq_map
         end
 
-        # create an ordered(by score) list of word,fieldname,score 
+        # create an ordered(by score) list of word,fieldname,score
         # structures
         def create_queue(term_freq_map, reader, options)
           pq = Array.new(term_freq_map.size)
-          
+
           similarity = options[:similarity]
           num_docs = reader.num_docs
           term_freq_map.each_pair do |word, tf|
             # filter out words that don't occur enough times in the source
             next if options[:min_term_freq] && tf < options[:min_term_freq]
-            
+
             # go through all the fields and find the largest document frequency
             top_field = options[:field_names].first
             doc_freq = 0
-            options[:field_names].each do |field_name| 
+            options[:field_names].each do |field_name|
               freq = reader.doc_freq(field_name, word)
-              if freq > doc_freq 
+              if freq > doc_freq
                 top_field = field_name
                 doc_freq = freq
               end
@@ -176,7 +176,7 @@ module ActsAsFerret #:nodoc:
             # filter out words that don't occur in enough docs
             next if options[:min_doc_freq] && doc_freq < options[:min_doc_freq]
             next if doc_freq == 0 # index update problem ?
-            
+
             idf = similarity.idf(doc_freq, num_docs)
             score = tf * idf
             pq << FrequencyQueueItem.new(word, top_field, score)
@@ -185,7 +185,7 @@ module ActsAsFerret #:nodoc:
           pq.sort! { |a,b| a.score<=>b.score }
           return pq
         end
-        
+
         def noise_word?(text, options)
           len = text.length
           (

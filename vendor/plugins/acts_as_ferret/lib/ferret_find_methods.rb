@@ -42,7 +42,7 @@ module ActsAsFerret
       logger.debug "now retrieving records from AR with options: #{ar_options.inspect}"
       result = ActsAsFerret::retrieve_records(id_arrays, ar_options)
       logger.debug "#{result.size} results from AR: #{result.inspect}"
-      
+
       # count total_hits via sql when using conditions, multiple models, or when we're called
       # from an ActiveRecord association.
       if id_arrays.size > 1 or ar_options[:conditions]

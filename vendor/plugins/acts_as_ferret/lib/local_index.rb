@@ -28,14 +28,14 @@ module ActsAsFerret
       #logger.debug "LocalIndex: ensure_index_exists at #{index_definition[:index_dir]}"
       unless File.file? "#{index_definition[:index_dir]}/segments"
         ActsAsFerret::ensure_directory(index_definition[:index_dir])
-        rebuild_index 
+        rebuild_index
       end
     end
 
     # Closes the underlying index instance
     def close
       @ferret_index.close if @ferret_index
-    rescue StandardError 
+    rescue StandardError
       # is raised when index already closed
     ensure
       @ferret_index = nil
@@ -46,7 +46,7 @@ module ActsAsFerret
       models = index_definition[:registered_models]
       logger.debug "rebuild index with models: #{models.inspect}"
       close
-      index = Ferret::Index::Index.new(index_definition[:ferret].dup.update(:auto_flush  => false, 
+      index = Ferret::Index::Index.new(index_definition[:ferret].dup.update(:auto_flush  => false,
                                                                             :field_infos => ActsAsFerret::field_infos(index_definition),
                                                                             :create      => true))
       index.batch_size = index_definition[:reindex_batch_size]
@@ -81,7 +81,7 @@ module ActsAsFerret
       end
     end
 
-    # Total number of hits for the given query. 
+    # Total number of hits for the given query.
     def total_hits(query, options = {})
       ferret_index.search(process_query(query, options), options).total_hits
     end
@@ -103,7 +103,7 @@ module ActsAsFerret
     def add(record, analyzer = nil)
       unless Hash === record || Ferret::Document === record
         analyzer = record.ferret_analyzer
-        record = record.to_doc 
+        record = record.to_doc
       end
       ferret_index.add_document(record, analyzer)
     end
@@ -161,7 +161,7 @@ module ActsAsFerret
     end
 
 
-    # retrieves stored fields from index definition in case the fields to retrieve 
+    # retrieves stored fields from index definition in case the fields to retrieve
     # haven't been specified with the :lazy option
     def determine_stored_fields(options = {})
       stored_fields = options[:lazy]
@@ -173,11 +173,11 @@ module ActsAsFerret
     end
 
     # loads data for fields declared as :lazy from the Ferret document
-    def extract_stored_fields(doc, stored_fields) 
-      data = {} 
+    def extract_stored_fields(doc, stored_fields)
+      data = {}
       unless stored_fields.nil?
         logger.debug "extracting stored fields #{stored_fields.inspect} from document #{doc[:class_name]} / #{doc[:id]}"
-        fields = index_definition[:ferret_fields] 
+        fields = index_definition[:ferret_fields]
         stored_fields.each do |field|
           if field_cfg = fields[field]
             data[field_cfg[:via]] = doc[field]
@@ -185,7 +185,7 @@ module ActsAsFerret
         end
         logger.debug "done: #{data.inspect}"
       end
-      return data 
+      return data
     end
 
     protected
@@ -199,7 +199,7 @@ module ActsAsFerret
     #  multi_config.delete :default_field  # we don't want the default field list of *this* class for multi_searching
     #  ActsAsFerret::multi_indexes[key] ||= MultiIndex.new(model_classes, multi_config)
     #end
- 
+
   end
 
 end
