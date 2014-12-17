@@ -56,8 +56,8 @@ To run the system simply execute the following in a console window:
 
 now, make sure your crobtab contains:
 
-*/5 * * * * $RAILS_ROOT/app/crontab/feeder.sh 
-0,30 * * * * $RAILS_ROOT/app/crontab/twitter_trends.sh 
+*/5 * * * * $RAILS_ROOT/app/crontab/feeder.sh
+0,30 * * * * $RAILS_ROOT/app/crontab/twitter_trends.sh
 
 then, point your browser at http://localhost:3000 and away you go!
 

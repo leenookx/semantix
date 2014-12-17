@@ -24,7 +24,7 @@ class TwitterWorker < Workling::Base
       trends = doc['trends']
       trends.each do |trend|
         TwitterTrend.create(:head => head.id,
-                         :name => trend['name'], 
+                         :name => trend['name'],
                          :url => trend['url'])
       end
     rescue

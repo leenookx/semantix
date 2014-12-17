@@ -4,7 +4,7 @@ require 'yaml'
 require 'json'
 require 'lib/rest_client'
 
-class CalaisClient < Object 
+class CalaisClient < Object
 
     LICENSE_ID = YAML::load_file('keys.yml')['calais']
     C_URI = URI.parse('http://api.opencalais.com/enlighten/rest/')
@@ -20,7 +20,7 @@ class CalaisClient < Object
 
     def was_successful
     end
-  
+
     def get_tag_from_json
         result = JSON.parse @response
         result.delete_if {|key, value| key == "doc" } # ditching the doc
@@ -47,9 +47,9 @@ class CalaisClient < Object
     def to_json
         return @response
     end
-                                
+
   private
-               
+
     def paramsXML(format)
         <<-paramsXML;
             <c:params xmlns:c="http://s.opencalais.com/1/pred/"

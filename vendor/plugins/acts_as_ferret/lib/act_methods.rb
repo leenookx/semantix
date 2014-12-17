@@ -1,32 +1,32 @@
 module ActsAsFerret #:nodoc:
 
-  # This module defines the acts_as_ferret method and is included into 
+  # This module defines the acts_as_ferret method and is included into
   # ActiveRecord::Base
   module ActMethods
-          
-    
+
+
     def reloadable?; false end
-    
-    # declares a class as ferret-searchable. 
+
+    # declares a class as ferret-searchable.
     #
     # ====options:
     # fields:: names all fields to include in the index. If not given,
     #          all attributes of the class will be indexed. You may also give
-    #          symbols pointing to instance methods of your model here, i.e. 
-    #          to retrieve and index data from a related model. 
+    #          symbols pointing to instance methods of your model here, i.e.
+    #          to retrieve and index data from a related model.
     #
-    # additional_fields:: names fields to include in the index, in addition 
-    #                     to those derived from the db scheme. use if you want 
-    #                     to add custom fields derived from methods to the db 
-    #                     fields (which will be picked by aaf). This option will 
-    #                     be ignored when the fields option is given, in that 
+    # additional_fields:: names fields to include in the index, in addition
+    #                     to those derived from the db scheme. use if you want
+    #                     to add custom fields derived from methods to the db
+    #                     fields (which will be picked by aaf). This option will
+    #                     be ignored when the fields option is given, in that
     #                     case additional fields get specified there.
     #
     # if:: Can be set to a block that will be called with the record in question
     #      to determine if it should be indexed or not.
     #
     # index_dir:: declares the directory where to put the index for this class.
-    #             The default is RAILS_ROOT/index/RAILS_ENV/CLASSNAME. 
+    #             The default is RAILS_ROOT/index/RAILS_ENV/CLASSNAME.
     #             The index directory will be created if it doesn't exist.
     #
     # reindex_batch_size:: reindexing is done in batches of this size, default is 1000
@@ -34,13 +34,13 @@ module ActsAsFerret #:nodoc:
     #                      algorithm if this model uses a non-integer primary key named
     #                      'id' on MySQL.
     #
-    # ferret:: Hash of Options that directly influence the way the Ferret engine works. You 
-    #          can use most of the options the Ferret::I class accepts here, too. Among the 
+    # ferret:: Hash of Options that directly influence the way the Ferret engine works. You
+    #          can use most of the options the Ferret::I class accepts here, too. Among the
     #          more useful are:
     #
     #     or_default:: whether query terms are required by
     #                  default (the default, false), or not (true)
-    # 
+    #
     #     analyzer:: the analyzer to use for query parsing (default: nil,
     #                which means the ferret StandardAnalyzer gets used)
     #
@@ -48,14 +48,14 @@ module ActsAsFerret #:nodoc:
     #                     that don't have an explicit field list. This list should *not*
     #                     contain any untokenized fields. If it does, you're asking
     #                     for trouble (i.e. not getting results for queries having
-    #                     stop words in them). Aaf by default initializes the default field 
-    #                     list to contain all tokenized fields. If you use :single_index => true, 
+    #                     stop words in them). Aaf by default initializes the default field
+    #                     list to contain all tokenized fields. If you use :single_index => true,
     #                     you really should set this option specifying your default field
     #                     list (which should be equal in all your classes sharing the index).
-    #                     Otherwise you might get incorrect search results and you won't get 
+    #                     Otherwise you might get incorrect search results and you won't get
     #                     any lazy loading of stored field data.
     #
-    # For downwards compatibility reasons you can also specify the Ferret options in the 
+    # For downwards compatibility reasons you can also specify the Ferret options in the
     # last Hash argument.
     def acts_as_ferret(options={})
 
@@ -75,7 +75,7 @@ module ActsAsFerret #:nodoc:
         # set up AR hooks
         after_create  :ferret_create
         after_update  :ferret_update
-        after_destroy :ferret_destroy      
+        after_destroy :ferret_destroy
       end
 
       cattr_accessor :aaf_configuration
@@ -107,9 +107,9 @@ module ActsAsFerret #:nodoc:
 
 
     protected
-    
 
-    # helper to defines a method which adds the given field to a ferret 
+
+    # helper to defines a method which adds the given field to a ferret
     # document instance
     def define_to_field_method(field, options = {})
       method_name = "#{field}_to_ferret"
@@ -136,9 +136,9 @@ module ActsAsFerret #:nodoc:
           define_to_field_method field, options
         end
       elsif field_config.respond_to?(:each)
-        field_config.each do |field| 
+        field_config.each do |field|
           define_to_field_method field
-        end                
+        end
       end
     end
 

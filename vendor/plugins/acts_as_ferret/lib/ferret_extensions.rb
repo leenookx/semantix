@@ -1,13 +1,13 @@
 module Ferret
 
   module Analysis
-  
+
     # = PerFieldAnalyzer
     #
-    # This PerFieldAnalyzer is a workaround to a memory leak in 
+    # This PerFieldAnalyzer is a workaround to a memory leak in
     # ferret 0.11.4. It does basically do the same as the original
     # Ferret::Analysis::PerFieldAnalyzer, but without the leak :)
-    # 
+    #
     # http://ferret.davebalmain.com/api/classes/Ferret/Analysis/PerFieldAnalyzer.html
     #
     # Thanks to Ben from omdb.org for tracking this down and creating this
@@ -19,14 +19,14 @@ module Ferret
         @analyzers = {}
         @default_analyzer = default_analyzer
       end
-            
+
       def add_field( field, analyzer )
         @analyzers[field] = analyzer
       end
       alias []= add_field
-                
+
       def token_stream(field, string)
-        @analyzers.has_key?(field) ? @analyzers[field].token_stream(field, string) : 
+        @analyzers.has_key?(field) ? @analyzers[field].token_stream(field, string) :
           @default_analyzer.token_stream(field, string)
       end
     end
@@ -44,7 +44,7 @@ module Ferret
     end
 
     def index_model(model)
-      bulk_indexer = ActsAsFerret::BulkIndexer.new(:batch_size => @batch_size, :logger => logger, 
+      bulk_indexer = ActsAsFerret::BulkIndexer.new(:batch_size => @batch_size, :logger => logger,
                                                    :model => model, :index => self, :reindex => true)
       logger.info "reindexing model #{model.name}"
 
@@ -57,7 +57,7 @@ module Ferret
       options.reverse_merge! :optimize => true
       orig_flush = @auto_flush
       @auto_flush = false
-      bulk_indexer = ActsAsFerret::BulkIndexer.new(:batch_size => @batch_size, :logger => logger, 
+      bulk_indexer = ActsAsFerret::BulkIndexer.new(:batch_size => @batch_size, :logger => logger,
                                                    :model => model, :index => self, :total => ids.size)
       model.records_for_bulk_index(ids, @batch_size) do |records, offset|
         logger.debug "#{model} bulk indexing #{records.size} at #{offset}"
@@ -67,14 +67,14 @@ module Ferret
       flush
       if options[:optimize]
         logger.info 'optimizing...'
-        optimize 
+        optimize
       end
       @auto_flush = orig_flush
     end
-    
+
 
     # bulk-inserts a number of ferret documents.
-    # The argument has to be an array of two-element arrays each holding the document data and the analyzer to 
+    # The argument has to be an array of two-element arrays each holding the document data and the analyzer to
     # use for this document (which may be nil).
     def update_batch(document_analyzer_pairs)
       ids = document_analyzer_pairs.collect {|da| da.first[@id_field] }
@@ -92,9 +92,9 @@ module Ferret
           end
         end
         flush()
-      end      
+      end
     end
-    
+
     # If +docs+ is a Hash or an Array then a batch delete will be performed.
     # If +docs+ is an Array then it will be considered an array of +id+'s. If
     # it is a Hash, then its keys will be used instead as the Array of
@@ -135,7 +135,7 @@ module Ferret
       return self
     end
 
-    # search for the first document with +arg+ in the +id+ field and return it's internal document number. 
+    # search for the first document with +arg+ in the +id+ field and return it's internal document number.
     # The +id+ field is either :id or whatever you set
     # :id_field parameter to when you create the Index object.
     def doc_number(id)
@@ -174,7 +174,7 @@ module Ferret
     def self._load(string)
       # we exclude the last <DOC> sorting as it is appended by new anyway
       if string =~ /^Sort\[(.*?)(<DOC>(!)?)?\]$/
-        sort_fields = $1.split(',').map do |value| 
+        sort_fields = $1.split(',').map do |value|
         value.strip!
           Ferret::Search::SortField._load value unless value.blank?
         end

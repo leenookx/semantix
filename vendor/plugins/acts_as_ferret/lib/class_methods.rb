@@ -1,5 +1,5 @@
 module ActsAsFerret
-        
+
   module ClassMethods
 
     # Disables ferret index updates for this model. When a block is given,
@@ -102,12 +102,12 @@ module ActsAsFerret
 
     # Retrieve the index instance for this model class. This can either be a
     # LocalIndex, or a RemoteIndex instance.
-    # 
+    #
     def aaf_index
       @index ||= ActsAsFerret::get_index(aaf_configuration[:name])
-    end 
-    
-    # Finds instances by searching the Ferret index. Terms are ANDed by default, use 
+    end
+
+    # Finds instances by searching the Ferret index. Terms are ANDed by default, use
     # OR between terms for ORed queries. Or specify +:or_default => true+ in the
     # +:ferret+ options hash of acts_as_ferret.
     #
@@ -124,9 +124,9 @@ module ActsAsFerret
     # limit::       number of hits to retrieve, or :all to retrieve
     #               all results
     # lazy::        Array of field names whose contents should be read directly
-    #               from the index. Those fields have to be marked 
+    #               from the index. Those fields have to be marked
     #               +:store => :yes+ in their field options. Give true to get all
-    #               stored fields. Note that if you have a shared index, you have 
+    #               stored fields. Note that if you have a shared index, you have
     #               to explicitly state the fields you want to fetch, true won't
     #               work here)
     #
@@ -134,15 +134,15 @@ module ActsAsFerret
     # retrieving the data from db, useful to i.e. prefetch relationships with
     # :include or to specify additional filter criteria with :conditions.
     #
-    # This method returns a +SearchResults+ instance, which really is an Array that has 
+    # This method returns a +SearchResults+ instance, which really is an Array that has
     # been decorated with a total_hits attribute holding the total number of hits.
     # Additionally, SearchResults is compatible with the pagination helper
     # methods of the will_paginate plugin.
     #
-    # Please keep in mind that the number of results delivered might be less than 
-    # +limit+ if you specify any active record conditions that further limit 
+    # Please keep in mind that the number of results delivered might be less than
+    # +limit+ if you specify any active record conditions that further limit
     # the result. Use +limit+ and +offset+ as AR find_options instead.
-    # +page+ and +per_page+ are supposed to work regardless of any 
+    # +page+ and +per_page+ are supposed to work regardless of any
     # +conitions+ present in +find_options+.
     def find_with_ferret(q, options = {}, find_options = {})
       if respond_to?(:scope) && scope(:find, :conditions)
@@ -153,19 +153,19 @@ module ActsAsFerret
         end
       end
       return ActsAsFerret::find q, self, options, find_options
-    end 
+    end
 
 
-    # Returns the total number of hits for the given query 
+    # Returns the total number of hits for the given query
     #
-    # Note that since we don't query the database here, this method won't deliver 
+    # Note that since we don't query the database here, this method won't deliver
     # the expected results when used on an AR association.
     #
     def total_hits(q, options={})
       aaf_index.total_hits(q, options)
     end
 
-    # Finds instance model name, ids and scores by contents. 
+    # Finds instance model name, ids and scores by contents.
     # Useful e.g. if you want to search across models or do not want to fetch
     # all result records (yet).
     #
@@ -174,16 +174,16 @@ module ActsAsFerret
     # A block can be given too, it will be executed with every result:
     # find_ids_with_ferret(q, options) do |model, id, score|
     #    id_array << id
-    #    scores_by_id[id] = score 
+    #    scores_by_id[id] = score
     # end
     # NOTE: in case a block is given, only the total_hits value will be returned
     # instead of the [total_hits, results] array!
-    # 
+    #
     def find_ids_with_ferret(q, options = {}, &block)
       aaf_index.find_ids(q, options, &block)
     end
 
-    
+
     protected
 
 #    def find_records_lazy_or_not(q, options = {}, find_options = {})
@@ -204,7 +204,7 @@ module ActsAsFerret
 #      end
 #
 #      result = ActsAsFerret::retrieve_records( { self.name => result_ids }, find_options )
-#      
+#
 #      # count total_hits via sql when using conditions or when we're called
 #      # from an ActiveRecord association.
 #      if find_options[:conditions] or caller.find{ |call| call =~ %r{active_record/associations} }
@@ -255,7 +255,7 @@ module ActsAsFerret
 #        next if id_array.empty?
 #        model = model.constantize
 #        # merge conditions
-#        conditions = ActsAsFerret::combine_conditions([ "#{model.table_name}.#{model.primary_key} in (?)", id_array.keys ], 
+#        conditions = ActsAsFerret::combine_conditions([ "#{model.table_name}.#{model.primary_key} in (?)", id_array.keys ],
 #                                        find_options[:conditions])
 #        opts = find_options.merge :conditions => conditions
 #        opts.delete :limit; opts.delete :offset
@@ -265,6 +265,6 @@ module ActsAsFerret
 #    end
 
   end
-  
+
 end
 

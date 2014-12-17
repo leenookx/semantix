@@ -1,3 +1,3 @@
 class TwitterTrendHead < ActiveRecord::Base
-  has_many :twitter_trend 
+  has_many :twitter_trend
 end

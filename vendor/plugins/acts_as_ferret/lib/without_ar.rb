@@ -1,7 +1,7 @@
 module ActsAsFerret
 
-  # Include this module to use acts_as_ferret with model classes 
-  # not based on ActiveRecord. 
+  # Include this module to use acts_as_ferret with model classes
+  # not based on ActiveRecord.
   #
   # Implement the find_for_id(id) class method in your model class in
   # order to make search work.
@@ -48,5 +48,5 @@ module ActsAsFerret
       end
     end
   end
-        
+
 end

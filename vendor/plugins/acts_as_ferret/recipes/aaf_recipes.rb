@@ -1,5 +1,5 @@
 # Ferret DRb server Capistrano tasks
-# 
+#
 # Usage:
 # in your Capfile, add acts_as_ferret's recipes directory to your load path and
 # load the ferret tasks:
@@ -36,7 +36,7 @@
 #
 # cap deploy:stop deploy:update ferret:start deploy:migrate ferret:stop deploy:start
 #
-# Chances are that you're still not safe if your migrations not only modify the index, 
+# Chances are that you're still not safe if your migrations not only modify the index,
 # but also change the structure of your models. So just don't do both things in
 # one go - I can't think of an easy way to handle this case automatically.
 # Suggestions and patches are of course very welcome :-)

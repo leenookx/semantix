@@ -53,7 +53,7 @@ require 'rdig_adapter'
 # This mixin adds full text search capabilities to any Rails model.
 #
 # The current version emerged from on the original acts_as_ferret plugin done by
-# Kasper Weibel and a modified version done by Thomas Lockney, which  both can be 
+# Kasper Weibel and a modified version done by Thomas Lockney, which  both can be
 # found on the Ferret Wiki: http://ferret.davebalmain.com/trac/wiki/FerretOnRails.
 #
 # basic usage:
@@ -61,13 +61,13 @@ require 'rdig_adapter'
 # acts_as_ferret :fields => [ :title, :description ]
 #
 # now you can use ModelClass.find_by_contents(query) to find instances of your model
-# whose indexed fields match a given query. All query terms are required by default, but 
+# whose indexed fields match a given query. All query terms are required by default, but
 # explicit OR queries are possible. This differs from the ferret default, but imho is the more
 # often needed/expected behaviour (more query terms result in less results).
 #
 # Released under the MIT license.
 #
-# Authors: 
+# Authors:
 # Kasper Weibel Nielsen-Refs (original author)
 # Jens Kraemer <jk@jkraemer.net> (active maintainer since 2006)
 #
@@ -110,12 +110,12 @@ module ActsAsFerret
   @@logger.level = ActiveRecord::Base.logger.level rescue Logger::DEBUG
   mattr_accessor :logger
 
-    
+
   # Default ferret configuration for index fields
   DEFAULT_FIELD_OPTIONS = {
-    :store       => :no, 
-    :highlight   => :yes, 
-    :index       => :yes, 
+    :store       => :no,
+    :highlight   => :yes,
+    :index       => :yes,
     :term_vector => :with_positions_offsets,
     :boost       => 1.0
   }
@@ -123,7 +123,7 @@ module ActsAsFerret
   @@raise_drb_errors = false
   mattr_writer :raise_drb_errors
   def self.raise_drb_errors?; @@raise_drb_errors end
-  
+
   @@remote = nil
   mattr_accessor :remote
   def self.remote?
@@ -181,10 +181,10 @@ module ActsAsFerret
     }.update( options )
 
     index_definition[:registered_models] = []
-    
+
     # build ferret configuration
     index_definition[:ferret] = {
-      :or_default          => false, 
+      :or_default          => false,
       :handle_parse_errors => true,
       :default_field       => nil,              # will be set later on
       #:max_clauses => 512,
@@ -195,12 +195,12 @@ module ActsAsFerret
     index_definition[:user_default_field] = index_definition[:ferret][:default_field]
 
     unless remote?
-      ActsAsFerret::ensure_directory index_definition[:index_dir] 
+      ActsAsFerret::ensure_directory index_definition[:index_dir]
       index_definition[:index_base_dir] = index_definition[:index_dir]
       index_definition[:index_dir] = find_last_index_version(index_definition[:index_dir])
       logger.debug "using index in #{index_definition[:index_dir]}"
     end
-    
+
     # these properties are somewhat vital to the plugin and shouldn't
     # be overwritten by the user:
     index_definition[:ferret].update(
@@ -230,7 +230,7 @@ module ActsAsFerret
 
     return idx
   end
- 
+
   # called internally by the acts_as_ferret method
   #
   # returns the index
@@ -280,8 +280,8 @@ module ActsAsFerret
     options = add_models_to_options_if_necessary options, models_or_index_name
     find_index(models_or_index_name).find_ids query, options, &block
   end
-  
-  # returns an index instance suitable for searching/updating the named index. Will 
+
+  # returns an index instance suitable for searching/updating the named index. Will
   # return a read only MultiIndex when multiple model classes are given that do not
   # share the same physical index.
   def self.find_index(models_or_index_name)
@@ -323,7 +323,7 @@ module ActsAsFerret
       offset = options[:offset] || (options[:page] ? (options[:page] - 1) * limit : 0)
       options.delete :offset
       options[:limit] = :all
-      
+
       if multi or ((ar_options[:conditions] || ar_options[:order]) && options[:sort])
         # do pagination as the last step after everything has been fetched
         options[:late_pagination] = { :limit => limit, :offset => offset }
@@ -352,7 +352,7 @@ module ActsAsFerret
     end
     return filtered_include_options
   end
-  
+
   # returns the index used by the given class.
   #
   # If multiple classes are given, either the single index shared by these
@@ -392,7 +392,7 @@ module ActsAsFerret
   # find the most recent version of an index
   def self.find_last_index_version(basedir)
     # check for versioned index
-    versions = Dir.entries(basedir).select do |f| 
+    versions = Dir.entries(basedir).select do |f|
       dir = File.join(basedir, f)
       File.directory?(dir) && File.file?(File.join(dir, 'segments')) && f =~ /^\d+(_\d+)?$/
     end
@@ -430,16 +430,16 @@ module ActsAsFerret
   # retrieves search result records from a data structure like this:
   # { 'Model1' => { '1' => [ rank, score ], '2' => [ rank, score ] }
   #
-  # TODO: in case of STI AR will filter out hits from other 
+  # TODO: in case of STI AR will filter out hits from other
   # classes for us, but this
   # will lead to less results retrieved --> scoping of ferret query
   # to self.class is still needed.
   # from the ferret ML (thanks Curtis Hatter)
   # > I created a method in my base STI class so I can scope my query. For scoping
   # > I used something like the following line:
-  # > 
+  # >
   # > query << " role:#{self.class.eql?(Contents) '*' : self.class}"
-  # > 
+  # >
   # > Though you could make it more generic by simply asking
   # > "self.descends_from_active_record?" which is how rails decides if it should
   # > scope your "find" query for STI models. You can check out "base.rb" in
@@ -454,8 +454,8 @@ module ActsAsFerret
 
       # merge conditions
       conditions = conditions_for_model model_class, find_options[:conditions]
-      conditions = combine_conditions([ "#{model_class.table_name}.#{model_class.primary_key} in (?)", 
-                                        id_array.keys ], 
+      conditions = combine_conditions([ "#{model_class.table_name}.#{model_class.primary_key} in (?)",
+                                        id_array.keys ],
                                       conditions)
 
       # check for include association that might only exist on some models in case of multi_search
@@ -465,7 +465,7 @@ module ActsAsFerret
       end
 
       # fetch
-      tmp_result = model_class.find(:all, find_options.merge(:conditions => conditions, 
+      tmp_result = model_class.find(:all, find_options.merge(:conditions => conditions,
                                                              :include    => filtered_include_options))
 
       # set scores and rank
@@ -475,13 +475,13 @@ module ActsAsFerret
       # merge with result array
       result += tmp_result
     end
-    
+
     # order results as they were found by ferret, unless an AR :order
     # option was given
     result.sort! { |a, b| a.ferret_rank <=> b.ferret_rank } unless find_options[:order]
     return result
   end
-  
+
   # combine our conditions with those given by user, if any
   def self.combine_conditions(conditions, additional_conditions = [])
     returning conditions do
@@ -510,33 +510,33 @@ module ActsAsFerret
     FileUtils.mkdir_p dir unless (File.directory?(dir) || File.symlink?(dir))
   end
 
-  
+
   # make sure the default index base dir exists. by default, all indexes are created
   # under RAILS_ROOT/index/RAILS_ENV
   def self.init_index_basedir
     index_base = "#{RAILS_ROOT}/index"
     @@index_dir = "#{index_base}/#{RAILS_ENV}"
   end
-  
+
   mattr_accessor :index_dir
   init_index_basedir
-  
+
   def self.append_features(base)
     super
     base.extend(ClassMethods)
   end
-  
+
   # builds a FieldInfos instance for creation of an index
   def self.field_infos(index_definition)
     # default attributes for fields
-    fi = Ferret::Index::FieldInfos.new(:store => :no, 
-                                        :index => :yes, 
+    fi = Ferret::Index::FieldInfos.new(:store => :no,
+                                        :index => :yes,
                                         :term_vector => :no,
                                         :boost => 1.0)
     # unique key composed of classname and id
     fi.add_field(:key, :store => :no, :index => :untokenized)
     # primary key
-    fi.add_field(:id, :store => :yes, :index => :untokenized) 
+    fi.add_field(:id, :store => :yes, :index => :untokenized)
     # class_name
     fi.add_field(:class_name, :store => :yes, :index => :untokenized)
 
